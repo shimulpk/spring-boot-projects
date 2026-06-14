@@ -1,0 +1,18 @@
+package com.emranhss.GarmentsManagementSystem.dto.request;
+
+import lombok.Data;
+
+@Data
+public class BomStyleRequestDto {
+    private String styleCode;
+
+    private String styleName;
+
+    private String styleType;
+
+    private String description;
+
+    private String approvalStatus;
+
+    private String sizeSet;
+}
