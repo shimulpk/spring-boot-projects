@@ -1,0 +1,46 @@
+package com.emranhss.GarmentsManagementSystem.entity;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Table(name = "raw_material_checks")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class RawMaterialCheck {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "style_id")
+    private BomStyle style;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id")
+    private Order order;
+
+    private String orderCode;
+
+    private String poNumber;
+
+    private LocalDateTime createdAt;
+
+    private BigDecimal totalFabricRequired;
+
+    @OneToMany(
+            mappedBy = "rawMaterialCheck",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<RmcDetail> details = new ArrayList<>();
+}
