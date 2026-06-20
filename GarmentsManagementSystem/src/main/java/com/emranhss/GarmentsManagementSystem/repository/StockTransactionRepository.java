@@ -11,7 +11,5 @@ public interface StockTransactionRepository extends JpaRepository<StockTransacti
 
     List<StockTransaction> findByInventory_Id(Long inventoryId);
 
-    Long id(Long id);
 
-    Long id(Long id);
 }
