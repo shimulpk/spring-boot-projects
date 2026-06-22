@@ -17,11 +17,11 @@ public class ProcurementPoRequestDto {
 
     private Long requisitionId;
 
-    private String productName;
-
-    private BigDecimal quantity;
-
-    private BigDecimal unitPrice;
+//    private String productName;
+//
+//    private BigDecimal quantity;
+//
+//    private BigDecimal unitPrice;
 
     private BigDecimal taxPercent;
 }

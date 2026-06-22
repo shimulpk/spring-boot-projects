@@ -42,7 +42,7 @@ public class ProcurementPoServiceImpl implements ProcurementPoService {
                                 new RuntimeException("Requisition Not Found"));
 
         ProcurementPo po =
-                ProcurementPoMapper.toEntity(request);
+                ProcurementPoMapper.toEntity(request,requisition);
 
         po.setVendor(vendor);
         po.setRequisition(requisition);
@@ -51,8 +51,8 @@ public class ProcurementPoServiceImpl implements ProcurementPoService {
         po.setVendorPhone(vendor.getPhone());
 
         BigDecimal subtotal =
-                request.getQuantity()
-                        .multiply(request.getUnitPrice());
+                requisition.getQuantity()
+                        .multiply(requisition.getUnitPrice());
 
         BigDecimal tax =
                 subtotal.multiply(
@@ -91,6 +91,7 @@ public class ProcurementPoServiceImpl implements ProcurementPoService {
         po.setPoNumber(request.getPoNumber());
         po.setPoDate(request.getPoDate());
         po.setDeliveryDate(request.getDeliveryDate());
+        po.setTaxPercent(request.getTaxPercent());
 
         po.setVendor(vendor);
         po.setRequisition(requisition);
@@ -98,14 +99,14 @@ public class ProcurementPoServiceImpl implements ProcurementPoService {
         po.setVendorName(vendor.getCompanyName());
         po.setVendorPhone(vendor.getPhone());
 
-        po.setProductName(request.getProductName());
-        po.setQuantity(request.getQuantity());
-        po.setUnitPrice(request.getUnitPrice());
-        po.setTaxPercent(request.getTaxPercent());
+        po.setProductName(requisition.getCategoryName());
+        po.setQuantity(requisition.getQuantity());
+        po.setUnitPrice(requisition.getUnitPrice());
+
 
         BigDecimal subtotal =
-                request.getQuantity()
-                        .multiply(request.getUnitPrice());
+                requisition.getQuantity()
+                        .multiply(requisition.getUnitPrice());
 
         BigDecimal tax =
                 subtotal.multiply(

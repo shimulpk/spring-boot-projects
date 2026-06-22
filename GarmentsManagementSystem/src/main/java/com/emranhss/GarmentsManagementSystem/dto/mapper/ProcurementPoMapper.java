@@ -3,11 +3,12 @@ package com.emranhss.GarmentsManagementSystem.dto.mapper;
 import com.emranhss.GarmentsManagementSystem.dto.request.ProcurementPoRequestDto;
 import com.emranhss.GarmentsManagementSystem.dto.response.ProcurementPoResponseDto;
 import com.emranhss.GarmentsManagementSystem.entity.ProcurementPo;
+import com.emranhss.GarmentsManagementSystem.entity.Requisition;
 
 public class ProcurementPoMapper {
 
     public static ProcurementPo toEntity(
-            ProcurementPoRequestDto dto) {
+            ProcurementPoRequestDto dto, Requisition requisition) {
 
         if (dto == null) {
             return null;
@@ -18,11 +19,17 @@ public class ProcurementPoMapper {
         po.setPoNumber(dto.getPoNumber());
         po.setPoDate(dto.getPoDate());
         po.setDeliveryDate(dto.getDeliveryDate());
-
-        po.setProductName(dto.getProductName());
-        po.setQuantity(dto.getQuantity());
-        po.setUnitPrice(dto.getUnitPrice());
         po.setTaxPercent(dto.getTaxPercent());
+
+        if(requisition != null){
+
+            po.setProductName(requisition.getCategoryName());
+            po.setQuantity(requisition.getQuantity());
+            po.setUnitPrice(requisition.getUnitPrice());
+        }
+
+
+
 
         return po;
     }
