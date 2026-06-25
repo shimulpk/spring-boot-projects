@@ -1,8 +1,12 @@
 package com.emranhss.GarmentsManagementSystem.dto.response;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 @Data
+@RequiredArgsConstructor
+@AllArgsConstructor
 public class SewingPlanProgressResponseDto {
 //    Sewing Plan Input Qty
 //      Example: 6000 pcs
