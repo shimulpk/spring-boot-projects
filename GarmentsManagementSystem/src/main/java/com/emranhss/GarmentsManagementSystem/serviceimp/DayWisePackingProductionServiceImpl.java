@@ -1,0 +1,243 @@
+package com.emranhss.GarmentsManagementSystem.serviceimp;
+
+import com.emranhss.GarmentsManagementSystem.dto.mapper.DayWisePackingProductionMapper;
+import com.emranhss.GarmentsManagementSystem.dto.request.DayWisePackingProductionRequestDto;
+import com.emranhss.GarmentsManagementSystem.dto.response.DayWisePackingProductionResponseDto;
+import com.emranhss.GarmentsManagementSystem.dto.response.PackingPlanProgressResponseDto;
+import com.emranhss.GarmentsManagementSystem.entity.DayWisePackingProduction;
+import com.emranhss.GarmentsManagementSystem.entity.PackingPlan;
+import com.emranhss.GarmentsManagementSystem.enums.PackingPlanStatus;
+import com.emranhss.GarmentsManagementSystem.repository.DayWisePackingProductionRepository;
+import com.emranhss.GarmentsManagementSystem.repository.PackingPlanRepository;
+import com.emranhss.GarmentsManagementSystem.service.DayWisePackingProductionService;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+@Transactional
+public class DayWisePackingProductionServiceImpl implements DayWisePackingProductionService {
+    private final DayWisePackingProductionRepository dayWisePackingProductionRepository;
+
+    private final PackingPlanRepository packingPlanRepository;
+
+    @Override
+    public DayWisePackingProductionResponseDto create(DayWisePackingProductionRequestDto request) {
+//         Load Packing Plan
+
+        PackingPlan packingPlan =
+                packingPlanRepository.findById(
+                                request.getPackingPlanId())
+                        .orElseThrow(() ->
+                                new RuntimeException(
+                                        "Packing Plan Not Found"));
+
+        DayWisePackingProduction production =
+                new DayWisePackingProduction();
+
+        production.setPackingPlan(
+                packingPlan);
+
+        production.setDate(
+                request.getDate());
+
+        production.setTodayPackedQty(
+                request.getTodayPackedQty());
+
+        production.setTodayRejectQty(
+                request.getTodayRejectQty());
+
+//        Auto Display Fields
+
+        production.setBuyerName(
+                packingPlan.getBuyerName());
+
+        production.setOrderNo(
+                packingPlan.getOrderNo());
+
+        production.setStyleNo(
+                packingPlan.getStyleNo());
+
+//        Auto Carton Calculation  ceil(Today Packed Qty / Pcs Per Carton)
+
+        int cartons =
+                (int) Math.ceil(
+                        (double) request.getTodayPackedQty()
+                                / packingPlan.getPcsPerCarton());
+
+        production.setTodayPackedCartons(
+                cartons);
+
+        DayWisePackingProduction saved =
+                dayWisePackingProductionRepository
+                        .save(production);
+
+//        Update Packing Plan
+        recalculateAndSavePackingPlan(packingPlan);
+
+        return DayWisePackingProductionMapper.toDto(saved);
+    }
+
+
+    @Override
+    public DayWisePackingProductionResponseDto update(Long id, DayWisePackingProductionRequestDto request) {
+        DayWisePackingProduction production =
+                dayWisePackingProductionRepository
+                        .findById(id)
+                        .orElseThrow(() ->
+                                new RuntimeException(
+                                        "Packing Production Not Found"));
+
+        PackingPlan packingPlan =
+                packingPlanRepository.findById(
+                                request.getPackingPlanId())
+                        .orElseThrow(() ->
+                                new RuntimeException(
+                                        "Packing Plan Not Found"));
+
+        production.setPackingPlan(
+                packingPlan);
+
+        production.setDate(
+                request.getDate());
+
+        production.setTodayPackedQty(
+                request.getTodayPackedQty());
+
+        production.setTodayRejectQty(
+                request.getTodayRejectQty());
+
+
+        production.setBuyerName(
+                packingPlan.getBuyerName());
+
+        production.setOrderNo(
+                packingPlan.getOrderNo());
+
+        production.setStyleNo(
+                packingPlan.getStyleNo());
+
+//         Auto Carton Calculation
+
+        int cartons =
+                (int) Math.ceil(
+                        (double) request.getTodayPackedQty()
+                                / packingPlan.getPcsPerCarton());
+
+        production.setTodayPackedCartons(
+                cartons);
+
+        DayWisePackingProduction updated =
+                dayWisePackingProductionRepository
+                        .save(production);
+
+//        Recalculate Packing Plan
+
+                recalculateAndSavePackingPlan(packingPlan);
+
+        return DayWisePackingProductionMapper.toDto(updated);
+    }
+
+
+    @Override
+    public DayWisePackingProductionResponseDto getById(Long id) {
+        return DayWisePackingProductionMapper.toDto(
+                dayWisePackingProductionRepository
+                        .findById(id)
+                        .orElseThrow(() ->
+                                new RuntimeException(
+                                        "Packing Production Not Found")));
+    }
+
+    @Override
+    public List<DayWisePackingProductionResponseDto> getAll() {
+        return dayWisePackingProductionRepository
+                .findAll()
+                .stream()
+                .map(
+                        DayWisePackingProductionMapper::toDto)
+                .toList();
+    }
+
+    @Override
+    public void delete(Long id) {
+
+        DayWisePackingProduction production = dayWisePackingProductionRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Packing Production Not Found"));
+
+        // Delete korar age main plan ti variable e rakhlam
+        PackingPlan packingPlan = production.getPackingPlan();
+
+
+        dayWisePackingProductionRepository.delete(production);
+
+        // main plan notun kore update
+        recalculateAndSavePackingPlan(packingPlan);
+    }
+
+    @Override
+    public PackingPlanProgressResponseDto getProgress(Long packingPlanId) {
+        PackingPlan packingPlan =
+                packingPlanRepository.findById(
+                                packingPlanId)
+                        .orElseThrow(() ->
+                                new RuntimeException(
+                                        "Packing Plan Not Found"));
+
+        List<DayWisePackingProduction> productions =
+                dayWisePackingProductionRepository
+                        .findByPackingPlanId(
+                                packingPlanId);
+
+        int packedSoFar =
+                productions.stream()
+                        .mapToInt(p ->
+                                p.getTodayPackedQty() == null
+                                        ? 0
+                                        : p.getTodayPackedQty())
+                        .sum();
+
+        int remaining =
+                packingPlan.getTotalOrderQty()
+                        - packedSoFar;
+
+        if (remaining < 0) {
+            remaining = 0;
+        }
+
+        return new PackingPlanProgressResponseDto(
+                packingPlan.getTotalOrderQty(),
+                packedSoFar,
+                remaining
+        );
+    }
+
+    private void recalculateAndSavePackingPlan(PackingPlan packingPlan) {
+        List<DayWisePackingProduction> productions = dayWisePackingProductionRepository
+                .findByPackingPlanId(packingPlan.getId());
+
+        int totalPacked = productions.stream()
+                .mapToInt(p -> p.getTodayPackedQty() == null ? 0 : p.getTodayPackedQty())
+                .sum();
+
+        int totalReject = productions.stream()
+                .mapToInt(p -> p.getTodayRejectQty() == null ? 0 : p.getTodayRejectQty())
+                .sum();
+
+        packingPlan.setTotalPackedQty(totalPacked);
+        packingPlan.setRejectionQty(totalReject);
+
+
+        if (totalPacked >= packingPlan.getTotalOrderQty()) {
+            packingPlan.setStatus(PackingPlanStatus.READY_TO_SHIP);
+        } else {
+
+            packingPlan.setStatus(PackingPlanStatus.PENDING);
+        }
+
+        packingPlanRepository.save(packingPlan);
+    }
+}
