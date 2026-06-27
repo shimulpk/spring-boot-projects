@@ -1,5 +1,6 @@
 package com.emranhss.GarmentsManagementSystem.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,6 +27,7 @@ public class DayWiseFinishingProduction {
             name = "finishing_plan_id",
             nullable = false
     )
+    @JsonIgnore
     private FinishingPlan finishingPlan;
 
     @Column(nullable = false)

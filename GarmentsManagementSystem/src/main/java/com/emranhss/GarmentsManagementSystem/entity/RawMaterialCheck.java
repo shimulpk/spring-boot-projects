@@ -1,5 +1,6 @@
 package com.emranhss.GarmentsManagementSystem.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,10 +24,12 @@ public class RawMaterialCheck {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "style_id")
+    @JsonIgnore
     private BomStyle style;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
+    @JsonIgnore
     private Order order;
 
     private String orderCode;

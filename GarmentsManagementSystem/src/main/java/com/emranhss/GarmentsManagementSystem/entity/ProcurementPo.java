@@ -1,6 +1,7 @@
 package com.emranhss.GarmentsManagementSystem.entity;
 
 import com.emranhss.GarmentsManagementSystem.enums.ProcurementPoStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,10 +28,12 @@ public class ProcurementPo {
 
     @ManyToOne
     @JoinColumn(name = "vendor_id")
+    @JsonIgnore
     private Vendor vendor;
 
     @ManyToOne
     @JoinColumn(name = "requisition_id")
+    @JsonIgnore
     private Requisition requisition;
 
     private String productName;

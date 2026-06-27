@@ -1,5 +1,6 @@
 package com.emranhss.GarmentsManagementSystem.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,6 +20,7 @@ public class SewingTarget {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "production_line_id",
             nullable = false)
+    @JsonIgnore
     private ProductionLine productionLine;
 
     private Integer targetQuantity;
@@ -26,5 +28,6 @@ public class SewingTarget {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sewing_plan_id",
             nullable = false)
+    @JsonIgnore
     private SewingPlan sewingPlan;
 }

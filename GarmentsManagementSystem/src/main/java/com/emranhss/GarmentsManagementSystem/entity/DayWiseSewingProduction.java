@@ -1,5 +1,6 @@
 package com.emranhss.GarmentsManagementSystem.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,6 +27,7 @@ public class DayWiseSewingProduction {
             name = "sewing_plan_id",
             nullable = false
     )
+    @JsonIgnore
     private SewingPlan sewingPlan;
 
 
@@ -37,6 +39,7 @@ public class DayWiseSewingProduction {
             name = "production_line_id",
             nullable = false
     )
+    @JsonIgnore
     private ProductionLine productionLine;
 
     private LocalDate date;

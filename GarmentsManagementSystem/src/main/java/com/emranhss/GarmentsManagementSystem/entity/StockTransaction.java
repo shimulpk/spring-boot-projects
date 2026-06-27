@@ -1,6 +1,7 @@
 package com.emranhss.GarmentsManagementSystem.entity;
 
 import com.emranhss.GarmentsManagementSystem.enums.TransactionType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,6 +24,7 @@ public class StockTransaction {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "inventory_id", nullable = false)
+    @JsonIgnore
     private Inventory inventory;
 
     private String itemName;

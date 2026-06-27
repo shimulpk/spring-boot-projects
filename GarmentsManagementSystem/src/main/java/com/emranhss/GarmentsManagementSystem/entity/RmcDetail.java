@@ -1,5 +1,6 @@
 package com.emranhss.GarmentsManagementSystem.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,5 +34,6 @@ public class RmcDetail {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rmc_id")
+    @JsonIgnore
     private RawMaterialCheck rawMaterialCheck;
 }

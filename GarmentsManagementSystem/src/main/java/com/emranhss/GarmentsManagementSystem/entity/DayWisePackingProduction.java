@@ -1,5 +1,6 @@
 package com.emranhss.GarmentsManagementSystem.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,6 +23,7 @@ public class DayWisePackingProduction {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "packing_plan_id", nullable = false)
+    @JsonIgnore
     private PackingPlan packingPlan;
 
     @Column(nullable = false)

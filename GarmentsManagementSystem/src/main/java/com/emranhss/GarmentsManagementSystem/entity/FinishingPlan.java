@@ -1,6 +1,7 @@
 package com.emranhss.GarmentsManagementSystem.entity;
 
 import com.emranhss.GarmentsManagementSystem.enums.FinishingPlanStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,6 +30,7 @@ public class FinishingPlan {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sewing_plan_id",
             nullable = false)
+    @JsonIgnore
     private SewingPlan sewingPlan;
 
     private String buyerName;

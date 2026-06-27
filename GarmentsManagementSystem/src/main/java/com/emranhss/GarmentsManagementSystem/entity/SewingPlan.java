@@ -1,6 +1,7 @@
 package com.emranhss.GarmentsManagementSystem.entity;
 
 import com.emranhss.GarmentsManagementSystem.enums.SewingPlanStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,6 +29,7 @@ public class SewingPlan {
             name = "cutting_plan_id",
             nullable = false
     )
+    @JsonIgnore
     private CuttingPlan cuttingPlan;
 
     private String buyerName;
