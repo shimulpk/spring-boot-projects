@@ -7,7 +7,6 @@ import com.emranhss.GarmentsManagementSystem.entity.User;
 import com.emranhss.GarmentsManagementSystem.repository.UserRepository;
 import com.emranhss.GarmentsManagementSystem.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -56,6 +55,18 @@ public class UserServiceImp implements UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() ->
                         new RuntimeException("User not found with id : " + id));
+
+        if (!user.getEmail().equals(request.getEmail())
+                && userRepository.existsByEmail(request.getEmail())) {
+
+            throw new RuntimeException("Email already exists.");
+        }
+
+        if (!user.getPhone().equals(request.getPhone())
+                && userRepository.existsByPhone(request.getPhone())) {
+
+            throw new RuntimeException("Phone already exists.");
+        }
 
         // Update entity
         userMapper.updateEntity(request, user);
