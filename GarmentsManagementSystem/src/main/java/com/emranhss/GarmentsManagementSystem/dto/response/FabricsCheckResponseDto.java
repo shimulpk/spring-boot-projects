@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-public class RawMaterialCheckResponseDto {
+public class FabricsCheckResponseDto {
     private Long id;
 
     private Long orderDbId;
@@ -26,5 +26,5 @@ public class RawMaterialCheckResponseDto {
 
     private BigDecimal totalFabricRequired;
 
-    private List<RmcDetailResponseDto> details;
+    private List<FabricDetailsResponseDto> details;
 }

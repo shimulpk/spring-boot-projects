@@ -1,13 +1,13 @@
 package com.emranhss.GarmentsManagementSystem.serviceimp;
 
-import com.emranhss.GarmentsManagementSystem.dto.mapper.RawMaterialCheckMapper;
-import com.emranhss.GarmentsManagementSystem.dto.request.RawMaterialCheckRequestDto;
-import com.emranhss.GarmentsManagementSystem.dto.response.RawMaterialCheckResponseDto;
+import com.emranhss.GarmentsManagementSystem.dto.mapper.FabricsCheckMapper;
+import com.emranhss.GarmentsManagementSystem.dto.request.FabricsCheckRequestDto;
+import com.emranhss.GarmentsManagementSystem.dto.response.FabricsCheckResponseDto;
 import com.emranhss.GarmentsManagementSystem.entity.*;
 import com.emranhss.GarmentsManagementSystem.repository.OrderRepository;
-import com.emranhss.GarmentsManagementSystem.repository.RawMaterialCheckRepository;
+import com.emranhss.GarmentsManagementSystem.repository.FabricsCheckRepository;
 import com.emranhss.GarmentsManagementSystem.repository.UomRepository;
-import com.emranhss.GarmentsManagementSystem.service.RawMaterialCheckService;
+import com.emranhss.GarmentsManagementSystem.service.FabricsCheckService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,15 +20,15 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class RawMaterialCheckServiceImpl implements RawMaterialCheckService {
+public class FabricsCheckServiceImpl implements FabricsCheckService {
 
-    private final RawMaterialCheckRepository rawMaterialCheckRepository;
+    private final FabricsCheckRepository fabricsCheckRepository;
     private final OrderRepository orderRepository;
     private final UomRepository uomRepository;
 
 
     @Override
-    public RawMaterialCheckResponseDto generate(RawMaterialCheckRequestDto request) {
+    public FabricsCheckResponseDto generate(FabricsCheckRequestDto request) {
         Order order =
                 orderRepository.findById(
                                 request.getOrderId())
@@ -36,19 +36,19 @@ public class RawMaterialCheckServiceImpl implements RawMaterialCheckService {
                                 new RuntimeException(
                                         "Order Not Found"));
 
-        RawMaterialCheck rmc =
-                new RawMaterialCheck();
+        FabricsCheck fc =
+                new FabricsCheck();
 
-        rmc.setOrder(order);
-        rmc.setStyle(order.getStyle());
+        fc.setOrder(order);
+        fc.setStyle(order.getStyle());
 
-        rmc.setOrderCode(
+        fc.setOrderCode(
                 order.getOrderId());
 
-        rmc.setPoNumber(
+        fc.setPoNumber(
                 order.getPoNumber());
 
-        rmc.setCreatedAt(
+        fc.setCreatedAt(
                 LocalDateTime.now());
 
         BigDecimal totalFabric =
@@ -63,8 +63,8 @@ public class RawMaterialCheckServiceImpl implements RawMaterialCheckService {
                                     item.getType(),
                                     item.getSize());
 
-            RmcDetail detail =
-                    new RmcDetail();
+            FabricDetails detail =
+                    new FabricDetails();
 
             detail.setProductName(
                     item.getType());
@@ -78,7 +78,7 @@ public class RawMaterialCheckServiceImpl implements RawMaterialCheckService {
             detail.setQty(
                     item.getQuantity());
 
-            detail.setRawMaterialCheck(rmc);
+            detail.setFabricsCheck(fc);
 
             if (uomOptional.isPresent()) {
 
@@ -117,53 +117,53 @@ public class RawMaterialCheckServiceImpl implements RawMaterialCheckService {
                 detail.setHasUom(false);
             }
 
-            rmc.getDetails().add(detail);
+            fc.getDetails().add(detail);
         }
 
-        rmc.setTotalFabricRequired(
+        fc.setTotalFabricRequired(
                 totalFabric);
 
-        RawMaterialCheck saved =
+        FabricsCheck saved =
 
-                rawMaterialCheckRepository
-                        .save(rmc);
+                fabricsCheckRepository
+                        .save(fc);
 
-        return RawMaterialCheckMapper
+        return FabricsCheckMapper
                 .toDto(saved);
     }
 
     @Override
-    public RawMaterialCheckResponseDto getById(Long id) {
-        RawMaterialCheck rmc =
-                rawMaterialCheckRepository
+    public FabricsCheckResponseDto getById(Long id) {
+        FabricsCheck fc =
+                fabricsCheckRepository
                         .findById(id)
                         .orElseThrow(() ->
                                 new RuntimeException(
                                         "RMC Not Found"));
 
-        return RawMaterialCheckMapper
-                .toDto(rmc);
+        return FabricsCheckMapper
+                .toDto(fc);
     }
 
     @Override
-    public List<RawMaterialCheckResponseDto> getAll() {
-        return rawMaterialCheckRepository
+    public List<FabricsCheckResponseDto> getAll() {
+        return fabricsCheckRepository
                 .findAll()
                 .stream()
-                .map(RawMaterialCheckMapper::toDto)
+                .map(FabricsCheckMapper::toDto)
                 .toList();
     }
 
     @Override
     public void delete(Long id) {
-        RawMaterialCheck rmc =
-                rawMaterialCheckRepository
+        FabricsCheck rmc =
+                fabricsCheckRepository
                         .findById(id)
                         .orElseThrow(() ->
                                 new RuntimeException(
                                         "RMC Not Found"));
 
-        rawMaterialCheckRepository
+        fabricsCheckRepository
                 .delete(rmc);
     }
 }

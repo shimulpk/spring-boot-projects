@@ -9,11 +9,11 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "rmc_details")
+@Table(name = "fabrics_details")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class RmcDetail {
+public class FabricDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -35,5 +35,5 @@ public class RmcDetail {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rmc_id")
     @JsonIgnore
-    private RawMaterialCheck rawMaterialCheck;
+    private FabricsCheck fabricsCheck;
 }

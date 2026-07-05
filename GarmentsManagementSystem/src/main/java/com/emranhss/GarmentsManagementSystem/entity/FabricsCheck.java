@@ -12,11 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "raw_material_checks")
+@Table(name = "fabric-check")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class RawMaterialCheck {
+public class FabricsCheck {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,9 +41,9 @@ public class RawMaterialCheck {
     private BigDecimal totalFabricRequired;
 
     @OneToMany(
-            mappedBy = "rawMaterialCheck",
+            mappedBy = "fabricsCheck",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<RmcDetail> details = new ArrayList<>();
+    private List<FabricDetails> details = new ArrayList<>();
 }

@@ -3,6 +3,6 @@ package com.emranhss.GarmentsManagementSystem.dto.request;
 import lombok.Data;
 
 @Data
-public class RawMaterialCheckRequestDto {
+public class FabricsCheckRequestDto {
     private Long orderId;
 }

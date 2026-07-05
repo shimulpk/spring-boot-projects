@@ -6,12 +6,12 @@ import com.emranhss.GarmentsManagementSystem.dto.response.CuttingPlanResponseDto
 import com.emranhss.GarmentsManagementSystem.entity.Buyer;
 import com.emranhss.GarmentsManagementSystem.entity.CuttingPlan;
 import com.emranhss.GarmentsManagementSystem.entity.Order;
-import com.emranhss.GarmentsManagementSystem.entity.RawMaterialCheck;
+import com.emranhss.GarmentsManagementSystem.entity.FabricsCheck;
 import com.emranhss.GarmentsManagementSystem.enums.CuttingPlanStatus;
 import com.emranhss.GarmentsManagementSystem.repository.BuyerRepository;
 import com.emranhss.GarmentsManagementSystem.repository.CuttingPlanRepository;
 import com.emranhss.GarmentsManagementSystem.repository.OrderRepository;
-import com.emranhss.GarmentsManagementSystem.repository.RawMaterialCheckRepository;
+import com.emranhss.GarmentsManagementSystem.repository.FabricsCheckRepository;
 import com.emranhss.GarmentsManagementSystem.service.CuttingPlanService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +29,7 @@ public class CuttingPlanServiceImpl implements CuttingPlanService {
 
     private final OrderRepository orderRepository;
 
-    private final RawMaterialCheckRepository rawMaterialCheckRepository;
+    private final FabricsCheckRepository rawMaterialCheckRepository;
 
     @Override
     public CuttingPlanResponseDto create(CuttingPlanRequestDto request) {
@@ -54,7 +54,7 @@ public class CuttingPlanServiceImpl implements CuttingPlanService {
                     "Cutting Plan Already Exists");
         }
 
-        RawMaterialCheck rmc =
+        FabricsCheck rmc =
                 rawMaterialCheckRepository
                         .findByOrder_Id(order.getId())
                         .orElseThrow(() ->
@@ -116,7 +116,7 @@ public class CuttingPlanServiceImpl implements CuttingPlanService {
                                 new RuntimeException(
                                         "Order Not Found"));
 
-        RawMaterialCheck rmc =
+        FabricsCheck rmc =
                 rawMaterialCheckRepository
                         .findByOrder_Id(order.getId())
                         .orElseThrow(() ->

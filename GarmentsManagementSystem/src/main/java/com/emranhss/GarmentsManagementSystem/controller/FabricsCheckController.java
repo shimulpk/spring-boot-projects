@@ -1,8 +1,8 @@
 package com.emranhss.GarmentsManagementSystem.controller;
 
-import com.emranhss.GarmentsManagementSystem.dto.request.RawMaterialCheckRequestDto;
-import com.emranhss.GarmentsManagementSystem.dto.response.RawMaterialCheckResponseDto;
-import com.emranhss.GarmentsManagementSystem.service.RawMaterialCheckService;
+import com.emranhss.GarmentsManagementSystem.dto.request.FabricsCheckRequestDto;
+import com.emranhss.GarmentsManagementSystem.dto.response.FabricsCheckResponseDto;
+import com.emranhss.GarmentsManagementSystem.service.FabricsCheckService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,17 +12,17 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/rmc")
 @RequiredArgsConstructor
-public class RawMaterialCheckController {
+public class FabricsCheckController {
 
-    private final RawMaterialCheckService
+    private final FabricsCheckService
             rawMaterialCheckService;
 
     @PostMapping("/generate")
     public ResponseEntity<
-                RawMaterialCheckResponseDto>
+            FabricsCheckResponseDto>
     generate(
             @RequestBody
-            RawMaterialCheckRequestDto request) {
+            FabricsCheckRequestDto request) {
 
         return ResponseEntity.ok(
                 rawMaterialCheckService
@@ -31,7 +31,7 @@ public class RawMaterialCheckController {
 
     @GetMapping("/{id}")
     public ResponseEntity<
-            RawMaterialCheckResponseDto>
+            FabricsCheckResponseDto>
     getById(
             @PathVariable Long id) {
 
@@ -42,7 +42,7 @@ public class RawMaterialCheckController {
 
     @GetMapping
     public ResponseEntity<
-            List<RawMaterialCheckResponseDto>>
+            List<FabricsCheckResponseDto>>
     getAll() {
 
         return ResponseEntity.ok(
