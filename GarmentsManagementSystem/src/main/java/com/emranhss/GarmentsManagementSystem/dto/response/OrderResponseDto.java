@@ -38,6 +38,8 @@ public class OrderResponseDto {
 
     private BigDecimal subtotal;
 
+    private BigDecimal vatPercent;
+
     private BigDecimal vat;
 
     private BigDecimal grandTotal;

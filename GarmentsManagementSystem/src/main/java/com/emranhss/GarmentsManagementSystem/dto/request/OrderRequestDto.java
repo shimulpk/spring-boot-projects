@@ -2,6 +2,7 @@ package com.emranhss.GarmentsManagementSystem.dto.request;
 
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -22,6 +23,8 @@ public class OrderRequestDto {
     private String status;
 
     private String shippingAddress;
+
+    private BigDecimal vatPercent;
 
     private List<OrderItemRequestDto> items;
 }

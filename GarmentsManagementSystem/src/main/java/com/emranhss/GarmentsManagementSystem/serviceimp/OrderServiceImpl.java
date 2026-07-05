@@ -46,7 +46,7 @@ public class OrderServiceImpl implements OrderService {
 
         buildOrderItems(order, request);
 
-        calculateTotals(order);
+        calculateTotals(order, request);
 
         Order savedOrder =
                 orderRepository.save(order);
@@ -85,7 +85,7 @@ public class OrderServiceImpl implements OrderService {
 
         buildOrderItems(order, request);
 
-        calculateTotals(order);
+        calculateTotals(order, request);
 
         Order updatedOrder =
                 orderRepository.save(order);
@@ -151,7 +151,7 @@ public class OrderServiceImpl implements OrderService {
         order.getItems().addAll(items);
     }
 
-    private void calculateTotals(Order order) {
+    private void calculateTotals(Order order, OrderRequestDto request) {
 
         int totalQty = 0;
 
@@ -179,16 +179,22 @@ public class OrderServiceImpl implements OrderService {
                     );
         }
 
+        BigDecimal vatPercent =
+                request.getVatPercent() == null
+                        ? BigDecimal.ZERO
+                        : request.getVatPercent();
+
         BigDecimal vat =
-                subtotal.multiply(
-                        BigDecimal.valueOf(0.05)
-                );
+                subtotal
+                        .multiply(vatPercent)
+                        .divide(BigDecimal.valueOf(100));
 
         BigDecimal grandTotal =
                 subtotal.add(vat);
 
         order.setTotalQuantity(totalQty);
         order.setSubtotal(subtotal);
+        order.setVatPercent(vatPercent);
         order.setVat(vat);
         order.setGrandTotal(grandTotal);
         order.setTotalAmount(grandTotal);

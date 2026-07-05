@@ -47,6 +47,7 @@ public class Order {
     private BigDecimal subtotal;
 
     private BigDecimal vat;
+    private BigDecimal vatPercent;
 
     private BigDecimal grandTotal;
 

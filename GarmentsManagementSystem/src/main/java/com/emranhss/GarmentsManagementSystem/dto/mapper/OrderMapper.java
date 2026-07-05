@@ -51,6 +51,7 @@ public class OrderMapper {
         dto.setTotalQuantity(order.getTotalQuantity());
 
         dto.setSubtotal(order.getSubtotal());
+        dto.setVatPercent(order.getVatPercent());
         dto.setVat(order.getVat());
         dto.setGrandTotal(order.getGrandTotal());
         dto.setTotalAmount(order.getTotalAmount());
