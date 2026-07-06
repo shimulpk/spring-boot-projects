@@ -14,8 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FabricsCheckController {
 
-    private final FabricsCheckService
-            rawMaterialCheckService;
+    private final FabricsCheckService fabricsCheckService;
 
     @PostMapping("/generate")
     public ResponseEntity<
@@ -25,7 +24,7 @@ public class FabricsCheckController {
             FabricsCheckRequestDto request) {
 
         return ResponseEntity.ok(
-                rawMaterialCheckService
+                fabricsCheckService
                         .generate(request));
     }
 
@@ -36,7 +35,7 @@ public class FabricsCheckController {
             @PathVariable Long id) {
 
         return ResponseEntity.ok(
-                rawMaterialCheckService
+                fabricsCheckService
                         .getById(id));
     }
 
@@ -46,7 +45,7 @@ public class FabricsCheckController {
     getAll() {
 
         return ResponseEntity.ok(
-                rawMaterialCheckService
+                fabricsCheckService
                         .getAll());
     }
 
@@ -55,10 +54,10 @@ public class FabricsCheckController {
     delete(
             @PathVariable Long id) {
 
-        rawMaterialCheckService.delete(id);
+        fabricsCheckService.delete(id);
 
         return ResponseEntity.ok(
-                "RMC Deleted Successfully");
+                "FC Deleted Successfully");
     }
 
 

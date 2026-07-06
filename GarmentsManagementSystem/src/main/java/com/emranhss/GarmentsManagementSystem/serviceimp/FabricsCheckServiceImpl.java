@@ -156,14 +156,14 @@ public class FabricsCheckServiceImpl implements FabricsCheckService {
 
     @Override
     public void delete(Long id) {
-        FabricsCheck rmc =
+        FabricsCheck fc =
                 fabricsCheckRepository
                         .findById(id)
                         .orElseThrow(() ->
                                 new RuntimeException(
-                                        "RMC Not Found"));
+                                        "Fc Not Found"));
 
         fabricsCheckRepository
-                .delete(rmc);
+                .delete(fc);
     }
 }
