@@ -7,22 +7,58 @@ import java.util.List;
 
 public interface ProcurementPoService {
 
+    // ===========================
+    // Create Purchase Order
+    // ===========================
+
     ProcurementPoResponseDto create(
             ProcurementPoRequestDto request);
+
+    // ===========================
+    // Update Purchase Order
+    // ===========================
 
     ProcurementPoResponseDto update(
             Long id,
             ProcurementPoRequestDto request);
 
-    ProcurementPoResponseDto getById(Long id);
+    // ===========================
+    // Get Purchase Order By Id
+    // ===========================
+
+    ProcurementPoResponseDto getById(
+            Long id);
+
+    // ===========================
+    // Get All Purchase Orders
+    // ===========================
 
     List<ProcurementPoResponseDto> getAll();
 
+    // ===========================
+    // Delete Purchase Order
+    // ===========================
+
     void delete(Long id);
 
-    ProcurementPoResponseDto issue(Long id);
+    // ===========================
+    // Issue Purchase Order
+    // ===========================
 
-    ProcurementPoResponseDto receive(Long id);
+    ProcurementPoResponseDto issue(
+            Long id);
 
-    ProcurementPoResponseDto cancel(Long id);
+    // ===========================
+    // Receive Purchase Order
+    // ===========================
+
+    ProcurementPoResponseDto receive(
+            Long id);
+
+    // ===========================
+    // Cancel Purchase Order
+    // ===========================
+
+    ProcurementPoResponseDto cancel(
+            Long id);
 }
