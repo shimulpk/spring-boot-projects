@@ -28,6 +28,9 @@ public class RmcMapper {
             dto.setOrderId(
                     entity.getOrder().getId());
 
+            dto.setOrderNumber(
+                    entity.getOrder().getOrderId());
+
         }
 
         if (entity.getStyle() != null) {

@@ -1,45 +1,23 @@
 package com.emranhss.GarmentsManagementSystem.dto.mapper;
 
+import com.emranhss.GarmentsManagementSystem.dto.request.ProcurementPoItemRequestDto;
 import com.emranhss.GarmentsManagementSystem.dto.request.ProcurementPoRequestDto;
+import com.emranhss.GarmentsManagementSystem.dto.response.ProcurementPoItemResponseDto;
 import com.emranhss.GarmentsManagementSystem.dto.response.ProcurementPoResponseDto;
 import com.emranhss.GarmentsManagementSystem.entity.ProcurementPo;
+import com.emranhss.GarmentsManagementSystem.entity.ProcurementPoItem;
 import com.emranhss.GarmentsManagementSystem.entity.Requisition;
+
+import java.util.stream.Collectors;
 
 public class ProcurementPoMapper {
 
-    public static ProcurementPo toEntity(
-            ProcurementPoRequestDto dto, Requisition requisition) {
-
-        if (dto == null) {
-            return null;
-        }
-
-        ProcurementPo po = new ProcurementPo();
-
-        po.setPoNumber(dto.getPoNumber());
-        po.setPoDate(dto.getPoDate());
-        po.setDeliveryDate(dto.getDeliveryDate());
-        po.setTaxPercent(dto.getTaxPercent());
-
-        if(requisition != null){
-
-            po.setProductName(requisition.getCategoryName());
-            po.setQuantity(requisition.getQuantity());
-            po.setUnitPrice(requisition.getUnitPrice());
-        }
-
-
-
-
-        return po;
-    }
+    // ===========================
+    // Entity -> Response DTO
+    // ===========================
 
     public static ProcurementPoResponseDto toDto(
             ProcurementPo po) {
-
-        if (po == null) {
-            return null;
-        }
 
         ProcurementPoResponseDto dto =
                 new ProcurementPoResponseDto();
@@ -47,37 +25,126 @@ public class ProcurementPoMapper {
         dto.setId(po.getId());
 
         dto.setPoNumber(po.getPoNumber());
+
         dto.setPoDate(po.getPoDate());
+
         dto.setDeliveryDate(po.getDeliveryDate());
 
-        dto.setProductName(po.getProductName());
+        dto.setVendorId(po.getVendor().getId());
 
-        dto.setQuantity(po.getQuantity());
-        dto.setUnitPrice(po.getUnitPrice());
-        dto.setTaxPercent(po.getTaxPercent());
+        dto.setVendorName(
+                po.getVendor().getCompanyName());
 
-        dto.setTotalPrice(po.getTotalPrice());
+        dto.setRequisitionId(
+                po.getRequisition().getId());
 
-        dto.setStatus(po.getStatus());
+        dto.setTaxPercent(
+                po.getTaxPercent());
 
-        if (po.getVendor() != null) {
+        dto.setSubTotal(
+                po.getSubTotal());
 
-            dto.setVendorId(
-                    po.getVendor().getId());
+        dto.setTaxAmount(
+                po.getTaxAmount());
 
-            dto.setVendorName(
-                    po.getVendor().getCompanyName());
+        dto.setGrandTotal(
+                po.getGrandTotal());
 
-            dto.setVendorPhone(
-                    po.getVendor().getPhone());
-        }
+        dto.setStatus(
+                po.getStatus());
 
-        if (po.getRequisition() != null) {
+        dto.setItems(
+                po.getItems()
+                        .stream()
 
-            dto.setRequisitionId(
-                    po.getRequisition().getId());
-        }
+                        .map(item -> ProcurementPoMapper.toItemDto(item))
+                        .collect(Collectors.toList())
+        );
 
         return dto;
+
+    }
+
+    // ===========================
+    // Item Entity -> Item DTO
+    // ===========================
+
+    public static ProcurementPoItemResponseDto toItemDto(
+            ProcurementPoItem item) {
+
+        ProcurementPoItemResponseDto dto =
+                new ProcurementPoItemResponseDto();
+
+        dto.setId(item.getId());
+
+        dto.setMaterialName(
+                item.getMaterialName());
+
+        dto.setUnit(
+                item.getUnit());
+
+        dto.setQuantity(
+                item.getQuantity());
+
+        dto.setUnitPrice(
+                item.getUnitPrice());
+
+        dto.setLineTotal(
+                item.getLineTotal());
+
+        return dto;
+
+    }
+
+    // ===========================
+    // Request -> Entity
+    // ===========================
+
+    public static ProcurementPo toEntity(
+            ProcurementPoRequestDto request) {
+
+        ProcurementPo po =
+                new ProcurementPo();
+
+        po.setPoNumber(
+                request.getPoNumber());
+
+        po.setPoDate(
+                request.getPoDate());
+
+        po.setDeliveryDate(
+                request.getDeliveryDate());
+
+        po.setTaxPercent(
+                request.getTaxPercent());
+
+        return po;
+
+    }
+
+    // ===========================
+    // Item Request -> Entity
+    // ===========================
+
+    public static ProcurementPoItem toItemEntity(
+            ProcurementPoItemRequestDto request) {
+
+        ProcurementPoItem item =
+                new ProcurementPoItem();
+
+        item.setMaterialName(
+                request.getMaterialName());
+
+        item.setUnit(
+                request.getUnit());
+
+        item.setQuantity(
+                request.getQuantity());
+
+        item.setUnitPrice(
+                request.getUnitPrice());
+
+        return item;
+
     }
 }

@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "procurement_pos")
@@ -20,36 +22,43 @@ public class ProcurementPo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, unique = true)
     private String poNumber;
 
+    @Column(nullable = false)
     private LocalDate poDate;
 
     private LocalDate deliveryDate;
 
-    @ManyToOne
-    @JoinColumn(name = "vendor_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "vendor_id", nullable = false)
     @JsonIgnore
     private Vendor vendor;
 
-    @ManyToOne
-    @JoinColumn(name = "requisition_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "requisition_id", nullable = false)
     @JsonIgnore
     private Requisition requisition;
 
-    private String productName;
+    @Column(nullable = false)
+    private BigDecimal taxPercent = BigDecimal.ZERO;
 
-    private BigDecimal quantity;
+    @Column(nullable = false)
+    private BigDecimal subTotal = BigDecimal.ZERO;
 
-    private BigDecimal unitPrice;
+    @Column(nullable = false)
+    private BigDecimal taxAmount = BigDecimal.ZERO;
 
-    private BigDecimal taxPercent;
-
-    private BigDecimal totalPrice;
-
-    private String vendorName;
-
-    private String vendorPhone;
+    @Column(nullable = false)
+    private BigDecimal grandTotal = BigDecimal.ZERO;
 
     @Enumerated(EnumType.STRING)
     private ProcurementPoStatus status;
+
+    @OneToMany(
+            mappedBy = "procurementPo",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<ProcurementPoItem> items = new ArrayList<>();
 }

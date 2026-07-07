@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 public class ProcurementPoRequestDto {
@@ -17,11 +18,7 @@ public class ProcurementPoRequestDto {
 
     private Long requisitionId;
 
-//    private String productName;
-//
-//    private BigDecimal quantity;
-//
-//    private BigDecimal unitPrice;
-
     private BigDecimal taxPercent;
+
+    private List<ProcurementPoItemRequestDto> items;
 }

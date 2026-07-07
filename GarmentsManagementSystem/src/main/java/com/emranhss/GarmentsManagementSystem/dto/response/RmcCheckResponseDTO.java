@@ -12,6 +12,8 @@ public class RmcCheckResponseDTO {
 
     private Long orderId;
 
+    private String orderNumber;
+
     private Long styleId;
 
     private String buyerName;
