@@ -6,25 +6,27 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "purchase_requisition_items")
+@Table(name = "purchase_order_items")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PurchaseRequisitionItem {
+public class PurchaseOrderItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "purchase_requisition_id")
-    private PurchaseRequisition purchaseRequisition;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "purchase_order_id")
+    private PurchaseOrder purchaseOrder;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
     private Item item;
 
     private Double quantity;
+
+    private Double unitPrice;
 
     private String remarks;
 }

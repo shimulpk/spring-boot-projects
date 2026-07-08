@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Data
-public class PurchaseRequisitionRequestDto {
+public class StoreRequisitionRequestDto {
 
     private LocalDate requisitionDate;
 
@@ -16,5 +16,5 @@ public class PurchaseRequisitionRequestDto {
 
     private String remarks;
 
-    private List<PurchaseRequisitionItemRequestDto> items;
+    private List<StoreRequisitionItemRequestDto> items;
 }

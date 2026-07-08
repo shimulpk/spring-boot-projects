@@ -1,19 +1,21 @@
 package com.emranhss.GarmentsManagementSystem.entity;
 
-import com.emranhss.GarmentsManagementSystem.enums.PurchaseRequisitionStatus;
+import com.emranhss.GarmentsManagementSystem.enums.StoreRequisitionStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table(name = "purchase_requisitions")
+@Table(name = "store_requisitions")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PurchaseRequisition {
+public class StoreRequisition {
 
 
     @Id
@@ -33,7 +35,13 @@ public class PurchaseRequisition {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private PurchaseRequisitionStatus status;
+    private StoreRequisitionStatus status;
 
+    @OneToMany(
+            mappedBy = "storeRequisition",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<StoreRequisitionItem> items = new ArrayList<>();
 
 }

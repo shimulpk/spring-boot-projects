@@ -1,13 +1,13 @@
 package com.emranhss.GarmentsManagementSystem.dto.response;
 
-import com.emranhss.GarmentsManagementSystem.enums.PurchaseRequisitionStatus;
+import com.emranhss.GarmentsManagementSystem.enums.StoreRequisitionStatus;
 import lombok.Data;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Data
-public class PurchaseRequisitionResponseDto {
+public class StoreRequisitionResponseDto {
 
     private Long id;
 
@@ -21,7 +21,7 @@ public class PurchaseRequisitionResponseDto {
 
     private String remarks;
 
-    private PurchaseRequisitionStatus status;
+    private StoreRequisitionStatus status;
 
-    private List<PurchaseRequisitionItemResponseDto> items;
+    private List<StoreRequisitionItemResponseDto> items;
 }

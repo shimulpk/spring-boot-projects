@@ -3,16 +3,14 @@ package com.emranhss.GarmentsManagementSystem.dto.response;
 import lombok.Data;
 
 @Data
-public class PurchaseRequisitionItemResponseDto {
+public class StoreRequisitionItemResponseDto {
 
     private Long id;
 
     private Long itemId;
 
     private String itemName;
-
-    private String uom;
-
+    private String unit;
     private Double quantity;
 
     private String remarks;
