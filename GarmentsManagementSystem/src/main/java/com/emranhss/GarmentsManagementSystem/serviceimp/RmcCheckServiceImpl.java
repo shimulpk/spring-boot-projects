@@ -41,6 +41,7 @@ public class RmcCheckServiceImpl implements RmcCheckService {
         BomStyle style =
                 order.getStyle();
 
+        System.out.println(style.toString());
 
 
         List<BomView> bomViews =
@@ -58,6 +59,8 @@ public class RmcCheckServiceImpl implements RmcCheckService {
         RmcCheck rmcCheck = new RmcCheck();
 
         rmcCheck.setOrder(order);
+
+
 
         rmcCheck.setStyle(style);
 

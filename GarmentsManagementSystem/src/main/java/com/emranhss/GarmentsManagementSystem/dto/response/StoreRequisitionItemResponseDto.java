@@ -13,5 +13,5 @@ public class StoreRequisitionItemResponseDto {
     private String unit;
     private Double quantity;
 
-    private String remarks;
+
 }

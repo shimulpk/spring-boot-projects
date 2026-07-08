@@ -4,12 +4,14 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Table(name = "bom_styles")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class BomStyle {
 
     @Id

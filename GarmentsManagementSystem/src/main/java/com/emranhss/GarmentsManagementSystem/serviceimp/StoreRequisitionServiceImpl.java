@@ -72,8 +72,7 @@ public class StoreRequisitionServiceImpl implements StoreRequisitionService {
             requisitionItem.setQuantity(
                     itemDto.getQuantity());
 
-            requisitionItem.setRemarks(
-                    itemDto.getRemarks());
+
 
             requisition.getItems()
                     .add(requisitionItem);
@@ -131,8 +130,7 @@ public class StoreRequisitionServiceImpl implements StoreRequisitionService {
             requisitionItem.setQuantity(
                     itemDto.getQuantity());
 
-            requisitionItem.setRemarks(
-                    itemDto.getRemarks());
+
 
             requisition.getItems().add(
                     requisitionItem);

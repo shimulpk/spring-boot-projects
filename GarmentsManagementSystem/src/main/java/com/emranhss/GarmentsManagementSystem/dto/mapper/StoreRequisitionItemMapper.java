@@ -25,7 +25,7 @@ public class StoreRequisitionItemMapper {
 
         dto.setQuantity(item.getQuantity());
 
-        dto.setRemarks(item.getRemarks());
+
 
         return dto;
     }

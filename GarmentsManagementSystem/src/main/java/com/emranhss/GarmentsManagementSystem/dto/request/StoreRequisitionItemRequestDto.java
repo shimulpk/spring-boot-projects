@@ -9,5 +9,5 @@ public class StoreRequisitionItemRequestDto {
 
     private Double quantity;
 
-    private String remarks;
+
 }

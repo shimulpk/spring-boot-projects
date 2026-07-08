@@ -26,5 +26,5 @@ public class StoreRequisitionItem {
 
     private Double quantity;
 
-    private String remarks;
+
 }
