@@ -6,36 +6,31 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "purchase_order_items")
+@Table(name = "goods_receive_note_items")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PurchaseOrderItem {
-
+public class GoodsReceiveNoteItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "purchase_order_id", nullable = false)
-    private PurchaseOrder purchaseOrder;
+    @JoinColumn(name = "goods_receive_note_id", nullable = false)
+    private GoodsReceiveNote goodsReceiveNote;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "item_id", nullable = false)
-    private Item item;
+    @JoinColumn(name = "purchase_order_item_id", nullable = false)
+    private PurchaseOrderItem purchaseOrderItem;
 
-    // Quantity from approved Store Requisition
     @Column(nullable = false)
     private Double quantity;
 
-    // Procurement enters this
     @Column(nullable = false)
     private Double unitPrice;
 
-    // quantity × unitPrice
-    @Column(nullable =false)
+    @Column(nullable = false)
     private Double lineTotal;
-
 
 }

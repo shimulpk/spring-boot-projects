@@ -19,4 +19,12 @@ public interface StoreRequisitionService {
     List<StoreRequisitionResponseDto> getAll();
 
     void delete(Long id);
+
+    List<StoreRequisitionResponseDto> getPendingRequisitions();
+
+    StoreRequisitionResponseDto approve(Long id);
+
+    StoreRequisitionResponseDto reject(Long id);
+
+    List<StoreRequisitionResponseDto> getApprovedRequisitions();
 }

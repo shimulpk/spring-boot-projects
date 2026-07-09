@@ -2,9 +2,8 @@ package com.emranhss.GarmentsManagementSystem.enums;
 
 public enum PurchaseOrderStatus {
 
-    DRAFT,
+    PENDING,
     APPROVED,
-    SENT,
     RECEIVED,
     CANCELLED
 }

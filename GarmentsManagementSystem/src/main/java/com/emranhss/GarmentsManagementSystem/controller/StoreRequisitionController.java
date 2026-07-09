@@ -57,4 +57,44 @@ public class StoreRequisitionController {
         return ResponseEntity.ok(
                 "Purchase Requisition Deleted Successfully");
     }
+
+    @GetMapping("/pending")
+    public ResponseEntity<List<StoreRequisitionResponseDto>> getPending() {
+
+        return ResponseEntity.ok(
+                storeRequisitionService.getPendingRequisitions());
+    }
+
+    @PutMapping("/{id}/approve")
+    public ResponseEntity<StoreRequisitionResponseDto> approve(
+            @PathVariable Long id) {
+
+        return ResponseEntity.ok(
+                storeRequisitionService.approve(id));
+    }
+
+    @PutMapping("/{id}/reject")
+    public ResponseEntity<StoreRequisitionResponseDto> reject(
+            @PathVariable Long id) {
+
+        return ResponseEntity.ok(
+                storeRequisitionService.reject(id));
+    }
+
+    // =====================================
+// Get Approved Store Requisitions
+// =====================================
+
+    @GetMapping("/approved")
+    public ResponseEntity<List<StoreRequisitionResponseDto>>
+    getApprovedRequisitions() {
+
+        return ResponseEntity.ok(
+                storeRequisitionService
+                        .getApprovedRequisitions());
+
+    }
+
+
+    
 }

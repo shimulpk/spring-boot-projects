@@ -14,8 +14,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PurchaseOrderController {
 
-
     private final PurchaseOrderService purchaseOrderService;
+
+    // =====================================
+    // Create Purchase Order
+    // =====================================
 
     @PostMapping
     public ResponseEntity<PurchaseOrderResponseDto> create(
@@ -24,6 +27,10 @@ public class PurchaseOrderController {
         return ResponseEntity.ok(
                 purchaseOrderService.create(request));
     }
+
+    // =====================================
+    // Update Purchase Order
+    // =====================================
 
     @PutMapping("/{id}")
     public ResponseEntity<PurchaseOrderResponseDto> update(
@@ -34,6 +41,10 @@ public class PurchaseOrderController {
                 purchaseOrderService.update(id, request));
     }
 
+    // =====================================
+    // Get Purchase Order By Id
+    // =====================================
+
     @GetMapping("/{id}")
     public ResponseEntity<PurchaseOrderResponseDto> getById(
             @PathVariable Long id) {
@@ -42,12 +53,20 @@ public class PurchaseOrderController {
                 purchaseOrderService.getById(id));
     }
 
+    // =====================================
+    // Get All Purchase Orders
+    // =====================================
+
     @GetMapping
     public ResponseEntity<List<PurchaseOrderResponseDto>> getAll() {
 
         return ResponseEntity.ok(
                 purchaseOrderService.getAll());
     }
+
+    // =====================================
+    // Delete Purchase Order
+    // =====================================
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(
@@ -58,4 +77,5 @@ public class PurchaseOrderController {
         return ResponseEntity.ok(
                 "Purchase Order Deleted Successfully");
     }
+
 }

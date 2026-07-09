@@ -1,24 +1,34 @@
 package com.emranhss.GarmentsManagementSystem.service;
 
 import com.emranhss.GarmentsManagementSystem.dto.request.PurchaseOrderRequestDto;
-import com.emranhss.GarmentsManagementSystem.dto.response.PurchaseOrderItemResponseDto;
 import com.emranhss.GarmentsManagementSystem.dto.response.PurchaseOrderResponseDto;
 
 import java.util.List;
 
 public interface PurchaseOrderService {
 
+    // Create Purchase Order
     PurchaseOrderResponseDto create(
-            PurchaseOrderRequestDto request);
+            PurchaseOrderRequestDto request
+    );
 
+    // Update Purchase Order
     PurchaseOrderResponseDto update(
             Long id,
-            PurchaseOrderRequestDto request);
+            PurchaseOrderRequestDto request
+    );
 
-    PurchaseOrderResponseDto getById(Long id);
+    // Get Purchase Order By Id
+    PurchaseOrderResponseDto getById(
+            Long id
+    );
 
+    // Get All Purchase Orders
     List<PurchaseOrderResponseDto> getAll();
 
-    void delete(Long id);
+    // Delete Purchase Order
+    void delete(
+            Long id
+    );
 
 }

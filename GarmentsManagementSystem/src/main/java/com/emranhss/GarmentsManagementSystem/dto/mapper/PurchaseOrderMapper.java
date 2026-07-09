@@ -3,52 +3,52 @@ package com.emranhss.GarmentsManagementSystem.dto.mapper;
 import com.emranhss.GarmentsManagementSystem.dto.response.PurchaseOrderResponseDto;
 import com.emranhss.GarmentsManagementSystem.entity.PurchaseOrder;
 
+import java.util.stream.Collectors;
+
 public class PurchaseOrderMapper {
 
     public static PurchaseOrderResponseDto toDto(
-            PurchaseOrder purchaseOrder) {
-
-        if (purchaseOrder == null) {
-            return null;
-        }
+            PurchaseOrder entity) {
 
         PurchaseOrderResponseDto dto =
                 new PurchaseOrderResponseDto();
 
-        dto.setId(
-                purchaseOrder.getId());
+        dto.setId(entity.getId());
 
-        dto.setPoNo(
-                purchaseOrder.getPoNo());
+        dto.setPoNo(entity.getPoNo());
 
-        dto.setPoDate(
-                purchaseOrder.getPoDate());
+        dto.setPoDate(entity.getPoDate());
 
         dto.setVendorId(
-                purchaseOrder.getVendor().getId());
+                entity.getVendor().getId());
 
         dto.setVendorName(
-                purchaseOrder.getVendor().getCompanyName());
+                entity.getVendor().getCompanyName());
 
-        dto.setPurchaseRequisitionId(
-                purchaseOrder.getStoreRequisition().getId());
+        dto.setStoreRequisitionId(
+                entity.getStoreRequisition().getId());
 
-        dto.setRemarks(
-                purchaseOrder.getRemarks());
+        dto.setRequisitionNo(
+                entity.getStoreRequisition().getPrNo());
 
         dto.setStatus(
-                purchaseOrder.getStatus());
+                entity.getStatus());
 
         dto.setGrandTotal(
-                purchaseOrder.getGrandTotal());
+                entity.getGrandTotal());
+
+        dto.setRemarks(
+                entity.getRemarks());
 
         dto.setItems(
-                purchaseOrder.getItems()
+                entity.getItems()
                         .stream()
                         .map(PurchaseOrderItemMapper::toDto)
-                        .toList());
+                        .collect(Collectors.toList())
+        );
 
         return dto;
+
     }
 
 }

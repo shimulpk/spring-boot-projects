@@ -6,12 +6,9 @@ import com.emranhss.GarmentsManagementSystem.dto.request.PurchaseOrderRequestDto
 import com.emranhss.GarmentsManagementSystem.dto.response.PurchaseOrderResponseDto;
 import com.emranhss.GarmentsManagementSystem.entity.*;
 import com.emranhss.GarmentsManagementSystem.enums.PurchaseOrderStatus;
-import com.emranhss.GarmentsManagementSystem.repository.ItemRepository;
-import com.emranhss.GarmentsManagementSystem.repository.PurchaseOrderRepository;
-import com.emranhss.GarmentsManagementSystem.repository.StoreRequisitionRepository;
-import com.emranhss.GarmentsManagementSystem.repository.VendorRepository;
+import com.emranhss.GarmentsManagementSystem.enums.StoreRequisitionStatus;
+import com.emranhss.GarmentsManagementSystem.repository.*;
 import com.emranhss.GarmentsManagementSystem.service.PurchaseOrderService;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,99 +16,89 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 
     private final PurchaseOrderRepository purchaseOrderRepository;
+
+    private final PurchaseOrderItemRepository purchaseOrderItemRepository;
+
     private final VendorRepository vendorRepository;
+
     private final StoreRequisitionRepository storeRequisitionRepository;
+
     private final ItemRepository itemRepository;
 
 
     @Override
     public PurchaseOrderResponseDto create(PurchaseOrderRequestDto request) {
+        Vendor vendor =
+                vendorRepository.findById(request.getVendorId())
+                        .orElseThrow(() ->
+                                new RuntimeException("Vendor Not Found"));
+
+        StoreRequisition requisition =
+                storeRequisitionRepository
+                        .findById(request.getStoreRequisitionId())
+                        .orElseThrow(() ->
+                                new RuntimeException("Store Requisition Not Found"));
+
+        // Only APPROVED requisition can create PO
+
+        if (requisition.getStatus()
+                != StoreRequisitionStatus.APPROVED) {
+
+            throw new RuntimeException(
+                    "Store Requisition is not approved.");
+        }
+
+        if (purchaseOrderRepository.existsByStoreRequisitionId(requisition.getId())) {
+            throw new RuntimeException(
+                    "Purchase Order already exists for this Store Requisition.");
+        }
+
         PurchaseOrder purchaseOrder =
                 new PurchaseOrder();
 
-        // PO Number
-        String poNo = "PO-" + System.currentTimeMillis();
-
-        purchaseOrder.setPoNo(poNo);
+        purchaseOrder.setPoNo(
+                generatePoNo());
 
         purchaseOrder.setPoDate(
                 request.getPoDate());
 
-        Vendor vendor =
-                vendorRepository.findById(
-                                request.getVendorId())
-                        .orElseThrow(() ->
-                                new RuntimeException(
-                                        "Vendor Not Found"));
-
-        purchaseOrder.setVendor(vendor);
-
-        StoreRequisition purchaseRequisition =
-                storeRequisitionRepository.findById(
-                                request.getStoreRequisitionId())
-                        .orElseThrow(() ->
-                                new RuntimeException(
-                                        "Purchase Requisition Not Found"));
+        purchaseOrder.setVendor(
+                vendor);
 
         purchaseOrder.setStoreRequisition(
-                purchaseRequisition);
+                requisition);
+
+        purchaseOrder.setStatus(
+                PurchaseOrderStatus.PENDING);
 
         purchaseOrder.setRemarks(
                 request.getRemarks());
 
-        purchaseOrder.setStatus(
-                PurchaseOrderStatus.DRAFT);
+        List<PurchaseOrderItem> items =
+                buildPurchaseOrderItems(
+                        purchaseOrder,
+                        requisition,
+                        request.getItems());
 
-        double grandTotal = 0.0;
-
-        for (PurchaseOrderItemRequestDto itemDto
-                : request.getItems()) {
-
-            Item item =
-                    itemRepository.findById(
-                                    itemDto.getItemId())
-                            .orElseThrow(() ->
-                                    new RuntimeException(
-                                            "Item Not Found"));
-
-            PurchaseOrderItem purchaseOrderItem =
-                    new PurchaseOrderItem();
-
-            purchaseOrderItem.setPurchaseOrder(
-                    purchaseOrder);
-
-            purchaseOrderItem.setItem(item);
-
-            purchaseOrderItem.setQuantity(
-                    itemDto.getQuantity());
-
-            purchaseOrderItem.setUnitPrice(
-                    itemDto.getUnitPrice());
-
-            purchaseOrderItem.setRemarks(
-                    itemDto.getRemarks());
-
-            purchaseOrder.getItems()
-                    .add(purchaseOrderItem);
-
-            grandTotal +=
-                    itemDto.getQuantity()
-                            * itemDto.getUnitPrice();
-        }
+        purchaseOrder.setItems(items);
 
         purchaseOrder.setGrandTotal(
-                grandTotal);
+                calculateGrandTotal(items));
 
         PurchaseOrder saved =
                 purchaseOrderRepository.save(
                         purchaseOrder);
 
-        return PurchaseOrderMapper.toDto(
-                saved);
+        // Store Requisition status update
+        requisition.setStatus(
+                StoreRequisitionStatus.PO_CREATED);
+
+        storeRequisitionRepository.save(
+                requisition);
+        return PurchaseOrderMapper.toDto(saved);
     }
 
     @Override
@@ -119,84 +106,56 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         PurchaseOrder purchaseOrder =
                 purchaseOrderRepository.findById(id)
                         .orElseThrow(() ->
-                                new RuntimeException(
-                                        "Purchase Order Not Found"));
+                                new RuntimeException("Purchase Order Not Found"));
+
+        Vendor vendor =
+                vendorRepository.findById(request.getVendorId())
+                        .orElseThrow(() ->
+                                new RuntimeException("Vendor Not Found"));
+
+        StoreRequisition requisition =
+                storeRequisitionRepository
+                        .findById(request.getStoreRequisitionId())
+                        .orElseThrow(() ->
+                                new RuntimeException("Store Requisition Not Found"));
+
+        if (requisition.getStatus()
+                != StoreRequisitionStatus.APPROVED) {
+
+            throw new RuntimeException(
+                    "Store Requisition is not approved.");
+        }
 
         purchaseOrder.setPoDate(
                 request.getPoDate());
 
-        Vendor vendor =
-                vendorRepository.findById(
-                                request.getVendorId())
-                        .orElseThrow(() ->
-                                new RuntimeException(
-                                        "Vendor Not Found"));
-
-        purchaseOrder.setVendor(vendor);
-
-        StoreRequisition purchaseRequisition =
-                storeRequisitionRepository.findById(
-                                request.getStoreRequisitionId())
-                        .orElseThrow(() ->
-                                new RuntimeException(
-                                        "Purchase Requisition Not Found"));
+        purchaseOrder.setVendor(
+                vendor);
 
         purchaseOrder.setStoreRequisition(
-                purchaseRequisition);
+                requisition);
 
         purchaseOrder.setRemarks(
                 request.getRemarks());
 
-        // Previous Items Remove
         purchaseOrder.getItems().clear();
 
-        double grandTotal = 0.0;
+        List<PurchaseOrderItem> items =
+                buildPurchaseOrderItems(
+                        purchaseOrder,
+                        requisition,
+                        request.getItems());
 
-        // New Items Add
-        for (PurchaseOrderItemRequestDto itemDto
-                : request.getItems()) {
-
-            Item item =
-                    itemRepository.findById(
-                                    itemDto.getItemId())
-                            .orElseThrow(() ->
-                                    new RuntimeException(
-                                            "Item Not Found"));
-
-            PurchaseOrderItem purchaseOrderItem =
-                    new PurchaseOrderItem();
-
-            purchaseOrderItem.setPurchaseOrder(
-                    purchaseOrder);
-
-            purchaseOrderItem.setItem(item);
-
-            purchaseOrderItem.setQuantity(
-                    itemDto.getQuantity());
-
-            purchaseOrderItem.setUnitPrice(
-                    itemDto.getUnitPrice());
-
-            purchaseOrderItem.setRemarks(
-                    itemDto.getRemarks());
-
-            purchaseOrder.getItems()
-                    .add(purchaseOrderItem);
-
-            grandTotal +=
-                    itemDto.getQuantity()
-                            * itemDto.getUnitPrice();
-        }
+        purchaseOrder.getItems().addAll(items);
 
         purchaseOrder.setGrandTotal(
-                grandTotal);
+                calculateGrandTotal(items));
 
         PurchaseOrder updated =
                 purchaseOrderRepository.save(
                         purchaseOrder);
 
-        return PurchaseOrderMapper.toDto(
-                updated);
+        return PurchaseOrderMapper.toDto(updated);
     }
 
     @Override
@@ -204,8 +163,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         PurchaseOrder purchaseOrder =
                 purchaseOrderRepository.findById(id)
                         .orElseThrow(() ->
-                                new RuntimeException(
-                                        "Purchase Order Not Found"));
+                                new RuntimeException("Purchase Order Not Found"));
 
         return PurchaseOrderMapper.toDto(
                 purchaseOrder);
@@ -213,7 +171,8 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 
     @Override
     public List<PurchaseOrderResponseDto> getAll() {
-        return purchaseOrderRepository.findAll()
+        return purchaseOrderRepository
+                .findAll()
                 .stream()
                 .map(PurchaseOrderMapper::toDto)
                 .toList();
@@ -224,10 +183,96 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         PurchaseOrder purchaseOrder =
                 purchaseOrderRepository.findById(id)
                         .orElseThrow(() ->
-                                new RuntimeException(
-                                        "Purchase Order Not Found"));
+                                new RuntimeException("Purchase Order Not Found"));
 
         purchaseOrderRepository.delete(
                 purchaseOrder);
     }
+
+
+    // =====================================================
+    // Generate PO Number
+    // =====================================================
+
+    private String generatePoNo() {
+
+        long count =
+                purchaseOrderRepository.count() + 1;
+
+        return String.format(
+                "PO-%04d",
+                count
+        );
+
+    }
+
+    // =====================================================
+// Build Purchase Order Items
+// =====================================================
+
+    private List<PurchaseOrderItem> buildPurchaseOrderItems(
+
+            PurchaseOrder purchaseOrder,
+
+            StoreRequisition storeRequisition,
+
+            List<PurchaseOrderItemRequestDto> requestItems) {
+
+        return requestItems.stream().map(dto -> {
+
+            StoreRequisitionItem requisitionItem =
+                    storeRequisition.getItems()
+                            .stream()
+                            .filter(item ->
+                                    item.getItem().getId()
+                                            .equals(dto.getItemId()))
+                            .findFirst()
+                            .orElseThrow(() ->
+                                    new RuntimeException(
+                                            "Item not found in Store Requisition"));
+
+            PurchaseOrderItem poItem =
+                    new PurchaseOrderItem();
+
+            poItem.setPurchaseOrder(
+                    purchaseOrder);
+
+            poItem.setItem(
+                    requisitionItem.getItem());
+
+            // Quantity always comes from Store Requisition
+            poItem.setQuantity(
+                    requisitionItem.getQuantity());
+
+            // Procurement only enters Unit Price
+            poItem.setUnitPrice(
+                    dto.getUnitPrice());
+
+            poItem.setLineTotal(
+                    requisitionItem.getQuantity()
+                            * dto.getUnitPrice());
+
+            return poItem;
+
+        }).toList();
+
+    }
+
+    // =====================================================
+    // Calculate Grand Total
+    // =====================================================
+
+    private Double calculateGrandTotal(
+            List<PurchaseOrderItem> items) {
+
+        return items
+                .stream()
+                .mapToDouble(
+                        PurchaseOrderItem::getLineTotal)
+                .sum();
+
+    }
+
 }
+
+

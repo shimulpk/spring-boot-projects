@@ -3,9 +3,11 @@ package com.emranhss.GarmentsManagementSystem.dto.response;
 import lombok.Data;
 
 @Data
-public class PurchaseOrderItemResponseDto {
+public class GoodsReceiveNoteItemResponseDto {
 
     private Long id;
+
+    private Long purchaseOrderItemId;
 
     private Long itemId;
 
@@ -18,6 +20,4 @@ public class PurchaseOrderItemResponseDto {
     private Double unitPrice;
 
     private Double lineTotal;
-
-
 }

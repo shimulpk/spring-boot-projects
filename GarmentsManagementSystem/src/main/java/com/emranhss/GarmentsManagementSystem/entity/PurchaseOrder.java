@@ -24,22 +24,26 @@ public class PurchaseOrder {
     @Column(unique = true, nullable = false)
     private String poNo;
 
+    @Column(nullable = false)
     private LocalDate poDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "vendor_id")
+    @JoinColumn(name = "vendor_id", nullable = false)
     private Vendor vendor;
 
+    // Approved Store Requisition
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "store_requisition_id")
+    @JoinColumn(name = "store_requisition_id", nullable = false)
     private StoreRequisition storeRequisition;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private PurchaseOrderStatus status;
 
     @Column(nullable = false)
     private Double grandTotal = 0.0;
 
+    @Column(length = 1000)
     private String remarks;
 
     @OneToMany(

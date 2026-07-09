@@ -19,13 +19,15 @@ public class PurchaseOrderResponseDto {
 
     private String vendorName;
 
-    private Long purchaseRequisitionId;
+    private Long storeRequisitionId;
 
-    private String remarks;
+    private String requisitionNo;
 
     private PurchaseOrderStatus status;
 
     private Double grandTotal;
+
+    private String remarks;
 
     private List<PurchaseOrderItemResponseDto> items;
 }

@@ -6,38 +6,32 @@ import com.emranhss.GarmentsManagementSystem.entity.PurchaseOrderItem;
 public class PurchaseOrderItemMapper {
 
     public static PurchaseOrderItemResponseDto toDto(
-            PurchaseOrderItem item) {
-
-        if (item == null) {
-            return null;
-        }
+            PurchaseOrderItem entity) {
 
         PurchaseOrderItemResponseDto dto =
                 new PurchaseOrderItemResponseDto();
 
-        dto.setId(item.getId());
+        dto.setId(entity.getId());
 
         dto.setItemId(
-                item.getItem().getId());
+                entity.getItem().getId());
 
         dto.setItemName(
-                item.getItem().getItemName());
+                entity.getItem().getItemName());
 
         dto.setUnit(
-                item.getItem().getUnit());
+                entity.getItem().getUnit());
 
         dto.setQuantity(
-                item.getQuantity());
+                entity.getQuantity());
 
         dto.setUnitPrice(
-                item.getUnitPrice());
+                entity.getUnitPrice());
 
-        dto.setTotalPrice(
-                item.getQuantity() * item.getUnitPrice());
-
-        dto.setRemarks(
-                item.getRemarks());
+        dto.setLineTotal(
+                entity.getLineTotal());
 
         return dto;
+
     }
 }

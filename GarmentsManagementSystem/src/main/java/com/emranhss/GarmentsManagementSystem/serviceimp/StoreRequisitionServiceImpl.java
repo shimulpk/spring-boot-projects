@@ -175,4 +175,58 @@ public class StoreRequisitionServiceImpl implements StoreRequisitionService {
         storeRequisitionRepository.delete(
                 requisition);
     }
+
+    @Override
+    public List<StoreRequisitionResponseDto> getPendingRequisitions() {
+        return storeRequisitionRepository
+                .findByStatus(StoreRequisitionStatus.PENDING)
+                .stream()
+                .map(StoreRequisitionMapper::toDto)
+                .toList();
+    }
+
+    @Override
+    public StoreRequisitionResponseDto approve(Long id) {
+        StoreRequisition requisition =
+                storeRequisitionRepository
+                        .findById(id)
+                        .orElseThrow(() ->
+                                new RuntimeException("Store Requisition Not Found"));
+
+        requisition.setStatus(
+                StoreRequisitionStatus.APPROVED
+        );
+
+        StoreRequisition saved =
+                storeRequisitionRepository.save(requisition);
+
+        return StoreRequisitionMapper.toDto(saved);
+    }
+
+    @Override
+    public StoreRequisitionResponseDto reject(Long id) {
+        StoreRequisition requisition =
+                storeRequisitionRepository
+                        .findById(id)
+                        .orElseThrow(() ->
+                                new RuntimeException("Store Requisition Not Found"));
+
+        requisition.setStatus(
+                StoreRequisitionStatus.REJECTED
+        );
+
+        StoreRequisition saved =
+                storeRequisitionRepository.save(requisition);
+
+        return StoreRequisitionMapper.toDto(saved);
+    }
+
+    @Override
+    public List<StoreRequisitionResponseDto> getApprovedRequisitions() {
+        return storeRequisitionRepository
+                .findByStatus(StoreRequisitionStatus.APPROVED)
+                .stream()
+                .map(StoreRequisitionMapper::toDto)
+                .toList();
+    }
 }

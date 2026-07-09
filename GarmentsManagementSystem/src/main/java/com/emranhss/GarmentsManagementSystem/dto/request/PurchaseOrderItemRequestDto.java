@@ -7,10 +7,10 @@ public class PurchaseOrderItemRequestDto {
 
     private Long itemId;
 
-    private Double quantity;
 
+
+    // Procurement dibe
     private Double unitPrice;
 
-    private String remarks;
 
 }
