@@ -13,6 +13,8 @@ public interface PurchaseOrderRepository extends JpaRepository<PurchaseOrder, Lo
 
     Optional<PurchaseOrder> findByPoNo(String poNo);
 
+    Optional<PurchaseOrder> findById(Long id);
+
     List<PurchaseOrder> findByStatus(
             PurchaseOrderStatus status
     );

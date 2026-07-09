@@ -37,7 +37,7 @@ public class PurchaseOrder {
     private StoreRequisition storeRequisition;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column
     private PurchaseOrderStatus status;
 
     @Column(nullable = false)
