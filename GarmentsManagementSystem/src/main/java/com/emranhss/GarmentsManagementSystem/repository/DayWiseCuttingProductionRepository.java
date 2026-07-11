@@ -13,6 +13,9 @@ public interface DayWiseCuttingProductionRepository extends JpaRepository<DayWis
 
     Integer countByCuttingPlanId(Long cuttingPlanId);
 
+
+    List<DayWiseCuttingProduction> findByCuttingPlanIdOrderByDateAsc(Long cuttingPlanId);
+
     @Query("""
 select coalesce(sum(d.actualCutPieces),0)
 from DayWiseCuttingProduction d

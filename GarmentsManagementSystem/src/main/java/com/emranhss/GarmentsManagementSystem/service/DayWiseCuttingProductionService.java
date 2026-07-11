@@ -21,8 +21,11 @@ public interface DayWiseCuttingProductionService {
             Long cuttingPlanId);
 
 
-    List<DayWiseCuttingProductionResponseDto>
-    getByCuttingPlan(Long cuttingPlanId);
+    List<DayWiseCuttingProductionResponseDto> getByCuttingPlan(Long cuttingPlanId);
+
+
+
+
 }
 
 
