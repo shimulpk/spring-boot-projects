@@ -30,6 +30,9 @@ public class GoodsReceiveNoteMapper {
         dto.setChallanNo(
                 entity.getChallanNo());
 
+        dto.setGrandTotal(
+                entity.getGrandTotal());
+
         dto.setRemarks(
                 entity.getRemarks());
 

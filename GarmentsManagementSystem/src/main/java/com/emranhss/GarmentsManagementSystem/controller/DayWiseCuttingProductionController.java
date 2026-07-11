@@ -50,4 +50,14 @@ public class DayWiseCuttingProductionController {
 
         return ResponseEntity.ok(service.getProgress(cuttingPlanId));
     }
+
+    @GetMapping("/cutting-plan/{cuttingPlanId}")
+    public ResponseEntity<List<DayWiseCuttingProductionResponseDto>>
+    getByCuttingPlan(
+            @PathVariable Long cuttingPlanId) {
+
+        return ResponseEntity.ok(
+                service.getByCuttingPlan(cuttingPlanId));
+
+    }
 }

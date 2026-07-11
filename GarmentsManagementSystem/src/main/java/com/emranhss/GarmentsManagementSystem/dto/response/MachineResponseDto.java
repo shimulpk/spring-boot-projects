@@ -14,7 +14,7 @@ public class MachineResponseDto {
     private String type;
 
     private Long productionLineId;
-    private String productionLineCode;
+    private String lineId;
 
     private Boolean active;
 }

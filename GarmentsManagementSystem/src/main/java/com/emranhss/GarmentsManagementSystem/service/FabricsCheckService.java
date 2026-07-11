@@ -16,4 +16,6 @@ public interface FabricsCheckService {
     List<FabricsCheckResponseDto> getAll();
 
     void delete(Long id);
+
+    FabricsCheckResponseDto getByOrder(Long orderId);
 }

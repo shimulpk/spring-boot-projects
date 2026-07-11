@@ -9,4 +9,6 @@ public interface StockService {
     List<StockResponseDto> getAll();
 
     StockResponseDto getById(Long id);
+
+    List<StockResponseDto> getAvailableStocks();
 }

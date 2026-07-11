@@ -19,4 +19,10 @@ public interface DayWiseCuttingProductionService {
 
     CuttingPlanProgressResponseDto getProgress(
             Long cuttingPlanId);
+
+
+    List<DayWiseCuttingProductionResponseDto>
+    getByCuttingPlan(Long cuttingPlanId);
 }
+
+

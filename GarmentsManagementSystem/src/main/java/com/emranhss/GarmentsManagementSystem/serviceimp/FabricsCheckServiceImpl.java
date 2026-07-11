@@ -166,4 +166,17 @@ public class FabricsCheckServiceImpl implements FabricsCheckService {
         fabricsCheckRepository
                 .delete(fc);
     }
+
+    @Override
+    public FabricsCheckResponseDto getByOrder(Long orderId) {
+        FabricsCheck fabricsCheck =
+                fabricsCheckRepository
+                        .findByOrder_Id(orderId)
+                        .orElseThrow(() ->
+                                new RuntimeException(
+                                        "Fabric Record Not Found"));
+
+        return FabricsCheckMapper
+                .toDto(fabricsCheck);
+    }
 }

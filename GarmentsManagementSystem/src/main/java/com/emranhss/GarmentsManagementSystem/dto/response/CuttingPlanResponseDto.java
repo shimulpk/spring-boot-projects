@@ -52,4 +52,12 @@ public class CuttingPlanResponseDto {
     private LocalDate endDate;
 
     private CuttingPlanStatus status;
+
+    private Integer actualCutPieces;
+
+    private Integer rejectedPieces;
+
+    private Integer remainingPieces;
+
+    private Double progress;
 }

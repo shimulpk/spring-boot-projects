@@ -37,6 +37,8 @@ public class GoodsReceiveNote {
     @Column(length = 1000)
     private String remarks;
 
+    private Double grandTotal = 0.0;
+
     @OneToMany(
             mappedBy = "goodsReceiveNote",
             cascade = CascadeType.ALL,

@@ -189,6 +189,15 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
                 purchaseOrder);
     }
 
+    @Override
+    public List<PurchaseOrderResponseDto> getPendingPurchaseOrders() {
+        return purchaseOrderRepository
+                .findAllByStatus(PurchaseOrderStatus.PENDING)
+                .stream()
+                .map(PurchaseOrderMapper::toDto)
+                .toList();
+    }
+
 
     // =====================================================
     // Generate PO Number

@@ -31,4 +31,6 @@ public interface PurchaseOrderService {
             Long id
     );
 
+    List<PurchaseOrderResponseDto> getPendingPurchaseOrders();
+
 }

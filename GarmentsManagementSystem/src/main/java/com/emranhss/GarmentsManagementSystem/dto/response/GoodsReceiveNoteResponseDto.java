@@ -20,6 +20,8 @@ public class GoodsReceiveNoteResponseDto {
 
     private String challanNo;
 
+    private Double grandTotal;
+
     private String remarks;
 
     private List<GoodsReceiveNoteItemResponseDto> items;

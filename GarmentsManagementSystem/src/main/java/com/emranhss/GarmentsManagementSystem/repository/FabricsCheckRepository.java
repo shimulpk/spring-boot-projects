@@ -9,4 +9,6 @@ import java.util.Optional;
 @Repository
 public interface FabricsCheckRepository extends JpaRepository<FabricsCheck, Long> {
     Optional<FabricsCheck> findByOrder_Id(Long orderId);
+
+
 }

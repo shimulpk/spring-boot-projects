@@ -61,6 +61,9 @@ public class GoodsReceiveNoteServiceImpl  implements GoodsReceiveNoteService {
         grn.setItems(
                 buildGrnItems(grn, purchaseOrder));
 
+        grn.setGrandTotal(
+                purchaseOrder.getGrandTotal());
+
         updateStock(purchaseOrder);
 
         goodsReceiveNoteRepository.save(grn);

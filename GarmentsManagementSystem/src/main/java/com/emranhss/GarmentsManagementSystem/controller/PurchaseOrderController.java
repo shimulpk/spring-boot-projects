@@ -78,4 +78,12 @@ public class PurchaseOrderController {
                 "Purchase Order Deleted Successfully");
     }
 
+
+    @GetMapping("/pending")
+    public List<PurchaseOrderResponseDto> getPendingPurchaseOrders() {
+
+        return purchaseOrderService.getPendingPurchaseOrders();
+
+    }
+
 }

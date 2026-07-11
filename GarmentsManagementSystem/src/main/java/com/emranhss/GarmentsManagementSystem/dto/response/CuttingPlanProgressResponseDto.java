@@ -1,5 +1,6 @@
 package com.emranhss.GarmentsManagementSystem.dto.response;
 
+import com.emranhss.GarmentsManagementSystem.enums.CuttingPlanStatus;
 import lombok.Data;
 
 @Data
@@ -11,4 +12,6 @@ public class CuttingPlanProgressResponseDto {
     private Integer remaining;
 
     private Double progress;
+
+    private CuttingPlanStatus status;
 }

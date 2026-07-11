@@ -121,6 +121,14 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.delete(order);
     }
 
+    @Override
+    public List<OrderResponseDto> getByBuyer(Long buyerId) {
+        return orderRepository.findByBuyerId(buyerId)
+                .stream()
+                .map(OrderMapper::toDto)
+                .toList();
+    }
+
     private void buildOrderItems(Order order,
                                  OrderRequestDto request) {
 

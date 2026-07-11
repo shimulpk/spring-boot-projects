@@ -42,8 +42,8 @@ public class MachineMapper {
         if (machine.getProductionLine() != null) {
             dto.setProductionLineId(machine.getProductionLine().getId());
 
-            // আপনার ProductionLine এনটিটিতে যে ফিল্ড আছে (যেমন: getLineId() বা getLineCode()) সেটি এখানে বসবে
-            dto.setProductionLineCode(machine.getProductionLine().getLineId());
+
+            dto.setLineId(machine.getProductionLine().getLineId());
         }
 
         return dto;

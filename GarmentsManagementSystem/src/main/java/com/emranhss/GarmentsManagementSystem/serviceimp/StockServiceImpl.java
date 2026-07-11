@@ -34,4 +34,13 @@ public class StockServiceImpl implements StockService {
         return StockMapper.toDto(stock);
 
     }
+
+    @Override
+    public List<StockResponseDto> getAvailableStocks() {
+        return stockRepository
+                .findByAvailableQuantityGreaterThan(0.0)
+                .stream()
+                .map(StockMapper::toDto)
+                .toList();
+    }
 }

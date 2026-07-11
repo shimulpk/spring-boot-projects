@@ -61,4 +61,14 @@ public class FabricsCheckController {
     }
 
 
+    @GetMapping("/order/{orderId}")
+    public ResponseEntity<FabricsCheckResponseDto> getByOrder(
+            @PathVariable Long orderId) {
+
+        return ResponseEntity.ok(
+                fabricsCheckService.getByOrder(orderId));
+
+    }
+
+
 }

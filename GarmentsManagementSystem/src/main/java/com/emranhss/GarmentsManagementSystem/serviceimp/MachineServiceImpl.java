@@ -25,7 +25,7 @@ public class MachineServiceImpl implements MachineService {
     @Override
     public MachineResponseDto create(MachineRequestDto request) {
 
-        // 🔄 চেঞ্জ ১: পোস্টম্যান থেকে আসা productionLineId দিয়ে ডাটাবেজ থেকে লাইনটি খুঁজে বের করা
+
         ProductionLine productionLine = productionLineRepository.findById(request.getProductionLineId())
                 .orElseThrow(() -> new RuntimeException("Production Line Not Found"));
 

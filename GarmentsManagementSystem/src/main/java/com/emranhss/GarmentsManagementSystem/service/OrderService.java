@@ -16,4 +16,6 @@ public interface OrderService {
     List<OrderResponseDto> getAll();
 
     void delete(Long id);
+
+    List<OrderResponseDto> getByBuyer(Long buyerId);
 }

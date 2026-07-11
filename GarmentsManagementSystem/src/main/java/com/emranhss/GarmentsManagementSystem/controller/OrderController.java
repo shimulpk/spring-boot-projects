@@ -57,4 +57,14 @@ public class OrderController {
         return ResponseEntity.ok(
                 "Order Deleted Successfully");
     }
+
+
+    @GetMapping("/buyer/{buyerId}")
+    public ResponseEntity<List<OrderResponseDto>> getByBuyer(
+            @PathVariable Long buyerId) {
+
+        return ResponseEntity.ok(
+                orderService.getByBuyer(buyerId));
+
+    }
 }

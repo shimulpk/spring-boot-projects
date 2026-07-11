@@ -46,4 +46,13 @@ public class CuttingPlanController {
 
         cuttingPlanService.delete(id);
     }
+
+
+    @GetMapping("/pending")
+    public ResponseEntity<List<CuttingPlanResponseDto>> getPendingPlans() {
+
+        return ResponseEntity.ok(
+                cuttingPlanService.getPendingPlans());
+
+    }
 }

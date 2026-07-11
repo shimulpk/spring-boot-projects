@@ -121,6 +121,17 @@ public class DayWiseCuttingProductionServiceImpl implements DayWiseCuttingProduc
         responseDto.setTarget(target);
         responseDto.setRemaining(remaining);
         responseDto.setProgress(progress);
+        responseDto.setStatus(plan.getStatus());
         return responseDto;
+    }
+
+    @Override
+    public List<DayWiseCuttingProductionResponseDto> getByCuttingPlan(Long cuttingPlanId) {
+        return productionRepository
+                .findByCuttingPlanId(cuttingPlanId)
+                .stream()
+                .map(DayWiseCuttingProductionMapper::toDto)
+                .toList();
+
     }
 }

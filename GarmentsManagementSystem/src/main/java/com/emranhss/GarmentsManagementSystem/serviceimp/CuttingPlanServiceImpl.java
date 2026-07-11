@@ -8,10 +8,7 @@ import com.emranhss.GarmentsManagementSystem.entity.CuttingPlan;
 import com.emranhss.GarmentsManagementSystem.entity.Order;
 import com.emranhss.GarmentsManagementSystem.entity.FabricsCheck;
 import com.emranhss.GarmentsManagementSystem.enums.CuttingPlanStatus;
-import com.emranhss.GarmentsManagementSystem.repository.BuyerRepository;
-import com.emranhss.GarmentsManagementSystem.repository.CuttingPlanRepository;
-import com.emranhss.GarmentsManagementSystem.repository.OrderRepository;
-import com.emranhss.GarmentsManagementSystem.repository.FabricsCheckRepository;
+import com.emranhss.GarmentsManagementSystem.repository.*;
 import com.emranhss.GarmentsManagementSystem.service.CuttingPlanService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +27,8 @@ public class CuttingPlanServiceImpl implements CuttingPlanService {
     private final OrderRepository orderRepository;
 
     private final FabricsCheckRepository rawMaterialCheckRepository;
+
+    private final DayWiseCuttingProductionRepository dayWiseCuttingProductionRepository;
 
     @Override
     public CuttingPlanResponseDto create(CuttingPlanRequestDto request) {
@@ -174,7 +173,7 @@ public class CuttingPlanServiceImpl implements CuttingPlanService {
 
     @Override
     public CuttingPlanResponseDto getById(Long id) {
-        return CuttingPlanMapper.toDto(
+        return convertWithProgress(
                 cuttingPlanRepository.findById(id)
                         .orElseThrow(() ->
                                 new RuntimeException(
@@ -185,12 +184,63 @@ public class CuttingPlanServiceImpl implements CuttingPlanService {
     public List<CuttingPlanResponseDto> getAll() {
         return cuttingPlanRepository.findAll()
                 .stream()
-                .map(CuttingPlanMapper::toDto)
+                .map(this::convertWithProgress)
                 .toList();
     }
 
     @Override
     public void delete(Long id) {
         cuttingPlanRepository.deleteById(id);
+    }
+
+    @Override
+    public List<CuttingPlanResponseDto> getPendingPlans() {
+        return cuttingPlanRepository
+                .findByStatus(CuttingPlanStatus.PENDING)
+                .stream()
+                .map(CuttingPlanMapper::toDto)
+                .toList();
+    }
+
+
+    private CuttingPlanResponseDto convertWithProgress(CuttingPlan plan) {
+
+        CuttingPlanResponseDto dto =
+                CuttingPlanMapper.toDto(plan);
+
+        Integer target =
+                plan.getPlannedPieces();
+
+        Integer actual =
+                dayWiseCuttingProductionRepository
+                        .getTotalActualCut(plan.getId());
+
+        Integer reject =
+                dayWiseCuttingProductionRepository
+                        .getTotalReject(plan.getId());
+
+        if (actual == null)
+            actual = 0;
+
+        if (reject == null)
+            reject = 0;
+
+        Integer remaining =
+                Math.max(target - actual, 0);
+
+        Double progress =
+                target == 0
+                        ? 0
+                        : actual * 100.0 / target;
+
+        dto.setActualCutPieces(actual);
+
+        dto.setRejectedPieces(reject);
+
+        dto.setRemainingPieces(remaining);
+
+        dto.setProgress(progress);
+
+        return dto;
     }
 }
