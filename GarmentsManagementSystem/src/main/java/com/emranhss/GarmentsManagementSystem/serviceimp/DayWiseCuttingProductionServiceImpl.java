@@ -115,12 +115,17 @@ public class DayWiseCuttingProductionServiceImpl implements DayWiseCuttingProduc
                         ? 0.0
                         : (cutSoFar * 100.0) / target;
 
+        Integer rejected =
+                productionRepository
+                        .getTotalReject(cuttingPlanId);
+
         CuttingPlanProgressResponseDto responseDto = new CuttingPlanProgressResponseDto();
 
         responseDto.setCutSoFar(cutSoFar);
         responseDto.setTarget(target);
         responseDto.setRemaining(remaining);
         responseDto.setProgress(progress);
+        responseDto.setRejected(rejected);
         responseDto.setStatus(plan.getStatus());
         return responseDto;
     }
@@ -128,7 +133,7 @@ public class DayWiseCuttingProductionServiceImpl implements DayWiseCuttingProduc
     @Override
     public List<DayWiseCuttingProductionResponseDto> getByCuttingPlan(Long cuttingPlanId) {
         return productionRepository
-                .findByCuttingPlanId(cuttingPlanId)
+                .findByCuttingPlanIdOrderByDateAsc(cuttingPlanId)
                 .stream()
                 .map(DayWiseCuttingProductionMapper::toDto)
                 .toList();

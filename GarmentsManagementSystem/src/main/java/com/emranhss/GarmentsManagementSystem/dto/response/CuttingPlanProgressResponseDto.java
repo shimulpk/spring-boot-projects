@@ -12,6 +12,7 @@ public class CuttingPlanProgressResponseDto {
     private Integer remaining;
 
     private Double progress;
+    private Integer rejected;   
 
     private CuttingPlanStatus status;
 }

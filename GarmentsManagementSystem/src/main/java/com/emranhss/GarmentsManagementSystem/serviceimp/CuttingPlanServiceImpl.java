@@ -202,6 +202,15 @@ public class CuttingPlanServiceImpl implements CuttingPlanService {
                 .toList();
     }
 
+    @Override
+    public List<CuttingPlanResponseDto> getCompletedPlans() {
+        return cuttingPlanRepository
+                .findByStatus(CuttingPlanStatus.COMPLETED)
+                .stream()
+                .map(CuttingPlanMapper::toDto)
+                .toList();
+    }
+
 
     private CuttingPlanResponseDto convertWithProgress(CuttingPlan plan) {
 

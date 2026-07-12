@@ -2,6 +2,7 @@ package com.emranhss.GarmentsManagementSystem.controller;
 
 import com.emranhss.GarmentsManagementSystem.dto.request.DayWiseSewingProductionRequestDto;
 import com.emranhss.GarmentsManagementSystem.dto.response.DayWiseSewingProductionResponseDto;
+import com.emranhss.GarmentsManagementSystem.dto.response.LineWiseSewingProgressResponseDto;
 import com.emranhss.GarmentsManagementSystem.dto.response.SewingPlanProgressResponseDto;
 import com.emranhss.GarmentsManagementSystem.service.DayWiseSewingProductionService;
 import lombok.RequiredArgsConstructor;
@@ -70,5 +71,18 @@ public class DayWiseSewingProductionController {
                 dayWiseSewingProductionService.getProgress(
                         sewingPlanId,
                         productionLineId));
+    }
+
+
+    @GetMapping("/line-progress/{sewingPlanId}")
+    public ResponseEntity<List<LineWiseSewingProgressResponseDto>>
+    getLineWiseProgress(
+            @PathVariable Long sewingPlanId){
+
+        return ResponseEntity.ok(
+
+                dayWiseSewingProductionService
+                        .getLineWiseProgress(sewingPlanId));
+
     }
 }

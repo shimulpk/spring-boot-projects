@@ -20,4 +20,6 @@ public interface CuttingPlanService {
     void delete(Long id);
 
     List<CuttingPlanResponseDto> getPendingPlans();
+
+    List<CuttingPlanResponseDto> getCompletedPlans();
 }

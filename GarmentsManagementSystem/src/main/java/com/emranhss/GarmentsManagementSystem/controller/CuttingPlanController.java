@@ -55,4 +55,12 @@ public class CuttingPlanController {
                 cuttingPlanService.getPendingPlans());
 
     }
+
+    @GetMapping("/completed")
+    public ResponseEntity<List<CuttingPlanResponseDto>> getCompletedPlans() {
+
+        return ResponseEntity.ok(
+                cuttingPlanService.getCompletedPlans());
+
+    }
 }

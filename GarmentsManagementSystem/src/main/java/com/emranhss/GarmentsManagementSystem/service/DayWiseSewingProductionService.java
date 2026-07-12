@@ -2,6 +2,7 @@ package com.emranhss.GarmentsManagementSystem.service;
 
 import com.emranhss.GarmentsManagementSystem.dto.request.DayWiseSewingProductionRequestDto;
 import com.emranhss.GarmentsManagementSystem.dto.response.DayWiseSewingProductionResponseDto;
+import com.emranhss.GarmentsManagementSystem.dto.response.LineWiseSewingProgressResponseDto;
 import com.emranhss.GarmentsManagementSystem.dto.response.SewingPlanProgressResponseDto;
 
 
@@ -24,6 +25,9 @@ public interface DayWiseSewingProductionService {
     getAll();
 
     void delete(Long id);
+
+    List<LineWiseSewingProgressResponseDto>
+    getLineWiseProgress(Long sewingPlanId);
 
 //    Used by Angular
 

@@ -15,4 +15,6 @@ public interface CuttingPlanRepository extends JpaRepository<CuttingPlan, Long> 
     boolean existsByOrder_Id(Long orderId);
 
     List<CuttingPlan> findByStatus(CuttingPlanStatus status);
+
+
 }
