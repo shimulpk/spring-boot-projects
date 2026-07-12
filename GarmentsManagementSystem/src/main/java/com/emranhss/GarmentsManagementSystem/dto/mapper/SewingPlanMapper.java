@@ -5,6 +5,7 @@ import com.emranhss.GarmentsManagementSystem.dto.response.SewingTargetResponseDt
 import com.emranhss.GarmentsManagementSystem.entity.SewingPlan;
 import com.emranhss.GarmentsManagementSystem.entity.SewingTarget;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SewingPlanMapper {
@@ -63,6 +64,9 @@ public class SewingPlanMapper {
                         .toList();
 
         dto.setTargets(targets);
+
+        dto.setLineProgress(
+                new ArrayList<>());
 
         return dto;
     }

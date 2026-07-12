@@ -3,6 +3,7 @@ package com.emranhss.GarmentsManagementSystem.serviceimp;
 import com.emranhss.GarmentsManagementSystem.dto.mapper.SewingPlanMapper;
 import com.emranhss.GarmentsManagementSystem.dto.request.SewingPlanRequestDto;
 import com.emranhss.GarmentsManagementSystem.dto.request.SewingTargetRequestDto;
+import com.emranhss.GarmentsManagementSystem.dto.response.SewingLineProgressResponseDto;
 import com.emranhss.GarmentsManagementSystem.dto.response.SewingPlanResponseDto;
 import com.emranhss.GarmentsManagementSystem.entity.CuttingPlan;
 import com.emranhss.GarmentsManagementSystem.entity.ProductionLine;
@@ -11,6 +12,7 @@ import com.emranhss.GarmentsManagementSystem.entity.SewingTarget;
 import com.emranhss.GarmentsManagementSystem.enums.CuttingPlanStatus;
 import com.emranhss.GarmentsManagementSystem.enums.SewingPlanStatus;
 import com.emranhss.GarmentsManagementSystem.repository.CuttingPlanRepository;
+import com.emranhss.GarmentsManagementSystem.repository.DayWiseSewingProductionRepository;
 import com.emranhss.GarmentsManagementSystem.repository.ProductionLineRepository;
 import com.emranhss.GarmentsManagementSystem.repository.SewingPlanRepository;
 import com.emranhss.GarmentsManagementSystem.service.SewingPlanService;
@@ -18,6 +20,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -29,6 +32,7 @@ public class SewingPlanServiceImpl implements SewingPlanService {
     private final CuttingPlanRepository cuttingPlanRepository;
 
     private final ProductionLineRepository productionLineRepository;
+    private final DayWiseSewingProductionRepository dayWiseSewingProductionRepository;
 
     @Override
     public SewingPlanResponseDto create(SewingPlanRequestDto request) {
@@ -174,23 +178,91 @@ public class SewingPlanServiceImpl implements SewingPlanService {
 
     @Override
     public SewingPlanResponseDto getById(Long id) {
-        return SewingPlanMapper.toDto(
+        SewingPlan sewingPlan =
                 sewingPlanRepository.findById(id)
                         .orElseThrow(() ->
                                 new RuntimeException(
-                                        "Sewing Plan Not Found")));
+                                        "Sewing Plan Not Found"));
+
+        SewingPlanResponseDto dto =
+                SewingPlanMapper.toDto(sewingPlan);
+
+        buildLineProgress(dto, sewingPlan);
+
+        return dto;
     }
 
     @Override
     public List<SewingPlanResponseDto> getAll() {
         return sewingPlanRepository.findAll()
+
                 .stream()
-                .map(SewingPlanMapper::toDto)
+
+                .map(plan -> {
+
+                    SewingPlanResponseDto dto =
+                            SewingPlanMapper.toDto(plan);
+
+                    buildLineProgress(dto, plan);
+
+                    return dto;
+
+                })
+
                 .toList();
     }
 
     @Override
     public void delete(Long id) {
         sewingPlanRepository.deleteById(id);
+    }
+
+
+
+    private void buildLineProgress(SewingPlanResponseDto dto,
+                                   SewingPlan sewingPlan) {
+
+        List<SewingLineProgressResponseDto> progressList =
+                new ArrayList<>();
+
+        for (SewingTarget target : sewingPlan.getTargets()) {
+
+            SewingLineProgressResponseDto progress =
+                    new SewingLineProgressResponseDto();
+
+            progress.setProductionLineId(
+                    target.getProductionLine().getId());
+
+            progress.setLineId(
+                    target.getProductionLine().getLineId());
+
+            progress.setTargetQty(
+                    target.getTargetQuantity());
+
+            Integer achieved =
+                    dayWiseSewingProductionRepository
+                            .getAchievedQty(
+                                    sewingPlan.getId(),
+                                    target.getProductionLine().getId());
+
+            Integer reject =
+                    dayWiseSewingProductionRepository
+                            .getRejectQty(
+                                    sewingPlan.getId(),
+                                    target.getProductionLine().getId());
+
+            progress.setAchievedQty(achieved);
+
+            progress.setRejectQty(reject);
+
+            progress.setRemainingQty(
+                    Math.max(
+                            target.getTargetQuantity() - achieved,
+                            0));
+
+            progressList.add(progress);
+        }
+
+        dto.setLineProgress(progressList);
     }
 }

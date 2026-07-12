@@ -37,4 +37,6 @@ public class SewingPlanResponseDto {
     private SewingPlanStatus status;
 
     private List<SewingTargetResponseDto> targets;
+
+    private List<SewingLineProgressResponseDto> lineProgress;
 }

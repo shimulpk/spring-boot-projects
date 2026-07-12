@@ -28,21 +28,19 @@ public interface DayWiseSewingProductionRepository extends JpaRepository<DayWise
     @Query("""
 select coalesce(sum(d.achievedQuantity),0)
 from DayWiseSewingProduction d
-where d.sewingPlan.id=:sewingPlanId
-and d.productionLine.id=:productionLineId
+where d.sewingPlan.id=:planId
+and d.productionLine.id=:lineId
 """)
-    Integer getAchievedQty(
-            Long sewingPlanId,
-            Long productionLineId);
+    Integer getAchievedQty(Long planId, Long lineId);
 
 
     @Query("""
 select coalesce(sum(d.rejectionQty),0)
 from DayWiseSewingProduction d
-where d.sewingPlan.id=:sewingPlanId
-and d.productionLine.id=:productionLineId
+where d.sewingPlan.id=:planId
+and d.productionLine.id=:lineId
 """)
-    Integer getRejectQty(
-            Long sewingPlanId,
-            Long productionLineId);
+    Integer getRejectQty(Long planId, Long lineId);
+
+
 }
