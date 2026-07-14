@@ -209,6 +209,19 @@ public class DayWiseSewingProductionServiceImpl implements DayWiseSewingProducti
     }
 
     @Override
+    public List<DayWiseSewingProductionResponseDto> getBySewingPlan(Long sewingPlanId) {
+
+        System.out.println("===== getBySewingPlan Called =====");
+        return dayWiseSewingProductionRepository
+                .findBySewingPlanIdOrderByDateAsc(
+                        sewingPlanId)
+                .stream()
+                .map(
+                        DayWiseSewingProductionMapper::toDto)
+                .toList();
+    }
+
+    @Override
     public SewingPlanProgressResponseDto getProgress(Long sewingPlanId, Long productionLineId) {
 
         SewingPlan sewingPlan =

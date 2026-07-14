@@ -70,4 +70,20 @@ public class DayWiseFinishingProductionController {
                         finishingPlanId));
     }
 
+
+    @GetMapping("/finishing-plan/{finishingPlanId}")
+    public ResponseEntity<List<DayWiseFinishingProductionResponseDto>>
+    getByFinishingPlan(
+            @PathVariable Long finishingPlanId) {
+
+        return ResponseEntity.ok(
+
+                dayWiseFinishingProductionService
+                        .getByFinishingPlan(
+                                finishingPlanId)
+
+        );
+
+    }
+
 }

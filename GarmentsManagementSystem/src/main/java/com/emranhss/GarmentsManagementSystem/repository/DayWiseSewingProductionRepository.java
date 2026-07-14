@@ -25,6 +25,11 @@ public interface DayWiseSewingProductionRepository extends JpaRepository<DayWise
     );
 
 
+// Date onujaye Details page e dekhano
+    List<DayWiseSewingProduction> findBySewingPlanIdOrderByDateAsc(Long sewingPlanId);
+
+
+
     @Query("""
 select coalesce(sum(d.achievedQuantity),0)
 from DayWiseSewingProduction d

@@ -32,4 +32,8 @@ public interface DayWiseFinishingProductionService {
 
     FinishingProgressResponseDto getProgress(
             Long finishingPlanId);
+
+
+    List<DayWiseFinishingProductionResponseDto> getByFinishingPlan(
+            Long finishingPlanId);
 }

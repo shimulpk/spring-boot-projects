@@ -14,4 +14,7 @@ public interface DayWiseFinishingProductionRepository extends JpaRepository<DayW
 
     List<DayWiseFinishingProduction> findByFinishingPlanId(
             Long finishingPlanId);
+
+    List<DayWiseFinishingProduction> findByFinishingPlanIdOrderByDateAsc(
+            Long finishingPlanId);
 }

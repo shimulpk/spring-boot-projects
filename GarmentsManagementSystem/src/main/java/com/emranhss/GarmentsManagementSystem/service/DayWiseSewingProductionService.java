@@ -29,6 +29,8 @@ public interface DayWiseSewingProductionService {
     List<LineWiseSewingProgressResponseDto>
     getLineWiseProgress(Long sewingPlanId);
 
+    List<DayWiseSewingProductionResponseDto> getBySewingPlan(Long sewingPlanId);
+
 //    Used by Angular
 
 //      Plan Input,Line Target,Achieved So Far,Remaining

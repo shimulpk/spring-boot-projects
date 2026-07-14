@@ -35,6 +35,19 @@ public class DayWiseSewingProductionController {
                 dayWiseSewingProductionService.update(id, request));
     }
 
+    @GetMapping("/sewing-plan/{sewingPlanId}")
+    public ResponseEntity<List<DayWiseSewingProductionResponseDto>>
+    getBySewingPlan(
+            @PathVariable Long sewingPlanId) {
+
+        return ResponseEntity.ok(
+                dayWiseSewingProductionService
+                        .getBySewingPlan(
+                                sewingPlanId));
+    }
+
+    
+
     @GetMapping("/{id}")
     public ResponseEntity<DayWiseSewingProductionResponseDto> getById(
             @PathVariable Long id) {

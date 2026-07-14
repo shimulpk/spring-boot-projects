@@ -182,6 +182,16 @@ public class DayWiseFinishingProductionServiceImpl implements DayWiseFinishingPr
         );
     }
 
+    @Override
+    public List<DayWiseFinishingProductionResponseDto> getByFinishingPlan(Long finishingPlanId) {
+        return dayWiseFinishingProductionRepository
+                .findByFinishingPlanIdOrderByDateAsc(
+                        finishingPlanId)
+                .stream()
+                .map(DayWiseFinishingProductionMapper::toDto)
+                .toList();
+
+    }
 
 
     private void recalculateAndSaveFinishingPlan(FinishingPlan finishingPlan) {
