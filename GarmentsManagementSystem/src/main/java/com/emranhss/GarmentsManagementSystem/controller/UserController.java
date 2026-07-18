@@ -1,8 +1,11 @@
 package com.emranhss.GarmentsManagementSystem.controller;
 
+import com.emranhss.GarmentsManagementSystem.dto.request.ChangePasswordRequestDto;
+import com.emranhss.GarmentsManagementSystem.dto.request.ProfileUpdateRequestDto;
 import com.emranhss.GarmentsManagementSystem.dto.request.UserRequestDto;
 import com.emranhss.GarmentsManagementSystem.dto.response.UserResponseDto;
 import com.emranhss.GarmentsManagementSystem.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,5 +43,40 @@ public class UserController {
     public ResponseEntity<String> delete(@PathVariable Long id) {
         userService.delete(id);
         return ResponseEntity.ok("User deleted successfully");
+    }
+
+
+    // =====================================
+// Logged-in User Profile
+// =====================================
+
+    @GetMapping("/me")
+    public ResponseEntity<UserResponseDto> getMyProfile() {
+
+        return ResponseEntity.ok(
+                userService.getMyProfile()
+        );
+
+    }
+
+
+    @PutMapping("/me")
+    public ResponseEntity<UserResponseDto> updateMyProfile(
+            @RequestBody ProfileUpdateRequestDto request
+    ) {
+
+        return ResponseEntity.ok(
+                userService.updateMyProfile(request)
+        );
+
+    }
+
+    @PutMapping("/change-password")
+    public ResponseEntity<String> changePassword(
+            @Valid @RequestBody ChangePasswordRequestDto request) {
+
+        userService.changePassword(request);
+
+        return ResponseEntity.ok("Password changed successfully");
     }
 }
