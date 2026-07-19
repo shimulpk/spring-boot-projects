@@ -17,4 +17,6 @@ public interface GoodsReceiveNoteRepository extends JpaRepository<GoodsReceiveNo
     List<GoodsReceiveNote> findTop5ByOrderByGrnDateDesc();
 
     long countByGrnDate(LocalDate grnDate);
+
+    
 }

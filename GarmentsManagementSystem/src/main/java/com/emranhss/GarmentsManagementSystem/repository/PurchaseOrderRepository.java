@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +18,11 @@ public interface PurchaseOrderRepository extends JpaRepository<PurchaseOrder, Lo
     List<PurchaseOrder> findAllByStatus(PurchaseOrderStatus status);
     boolean existsByStoreRequisitionId(Long storeRequisitionId);
 
+    long countByStatus(PurchaseOrderStatus status);
+
+    long countByPoDate(LocalDate poDate);
+
+    List<PurchaseOrder> findTop5ByOrderByPoDateDesc();
 
 
 }

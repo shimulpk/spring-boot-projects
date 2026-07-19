@@ -16,6 +16,10 @@ public interface StoreRequisitionRepository extends JpaRepository<StoreRequisiti
 
     long countByStatus(StoreRequisitionStatus status);
 
+    List<StoreRequisition> findTop5ByStatusOrderByRequisitionDateDesc(
+            StoreRequisitionStatus status
+    );
+
 
 
 }
