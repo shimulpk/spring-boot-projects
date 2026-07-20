@@ -46,4 +46,20 @@ from DayWiseSewingProduction d
 where d.date=:date
 """)
     Integer getTodaySewing(LocalDate date);
+
+    @Query("""
+select coalesce(sum(d.rejectionQty),0)
+from DayWiseSewingProduction d
+where d.date=:date
+""")
+    Integer getTodayReject(LocalDate date);
+
+    @Query("""
+select d
+from DayWiseSewingProduction d
+where d.date=:date
+order by d.styleNo
+""")
+    List<DayWiseSewingProduction> getTodayProductions(LocalDate date);
+
 }

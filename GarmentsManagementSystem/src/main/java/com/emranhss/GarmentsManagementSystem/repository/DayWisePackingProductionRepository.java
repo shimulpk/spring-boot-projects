@@ -2,8 +2,10 @@ package com.emranhss.GarmentsManagementSystem.repository;
 
 import com.emranhss.GarmentsManagementSystem.entity.DayWisePackingProduction;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -14,4 +16,37 @@ public interface DayWisePackingProductionRepository extends JpaRepository<DayWis
 
     List<DayWisePackingProduction> findByPackingPlanId(
             Long packingPlanId);
+//2ta method same hoye gese nicherta use hobe
+    @Query("""
+select coalesce(sum(d.todayPackedQty),0)
+from DayWisePackingProduction d
+where d.date=:date
+""")
+    Integer getTodayPacking(LocalDate date);
+
+    @Query("""
+select coalesce(sum(d.todayPackedQty),0)
+from DayWisePackingProduction d
+where d.date=:date
+""")
+    Integer getTodayPacked(LocalDate date);
+
+    @Query("""
+select coalesce(sum(d.todayRejectQty),0)
+from DayWisePackingProduction d
+where d.date=:date
+""")
+    Integer getTodayReject(LocalDate date);
+
+    @Query("""
+select d
+from DayWisePackingProduction d
+where d.date=:date
+order by d.styleNo
+""")
+    List<DayWisePackingProduction> getTodayProductions(LocalDate date);
+
+
+
+
 }

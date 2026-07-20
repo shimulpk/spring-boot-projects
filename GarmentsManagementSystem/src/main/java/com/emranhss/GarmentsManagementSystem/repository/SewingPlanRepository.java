@@ -13,4 +13,8 @@ public interface SewingPlanRepository extends JpaRepository<SewingPlan, Long> {
     Optional<SewingPlan> findBySewingPlanId(String sewingPlanId);
 
     List<SewingPlan> findByStatus(SewingPlanStatus status);
+
+    long countByStatus(SewingPlanStatus status);
+
+    List<SewingPlan> findTop5ByOrderByStartDateDesc();
 }

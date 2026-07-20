@@ -34,4 +34,23 @@ from DayWiseCuttingProduction d
 where d.date=:date
 """)
     Integer getTodayCutting(LocalDate date);
+
+
+    @Query("""
+select coalesce(sum(d.rejectPieces),0)
+from DayWiseCuttingProduction d
+where d.date=:date
+""")
+    Integer getTodayReject(LocalDate date);
+
+    @Query("""
+select d
+from DayWiseCuttingProduction d
+where d.date=:date
+order by d.styleNo
+""")
+    List<DayWiseCuttingProduction> getTodayProductions(LocalDate date);
+
+
+
 }

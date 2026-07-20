@@ -20,4 +20,8 @@ public interface FinishingPlanRepository extends JpaRepository<FinishingPlan, Lo
 
     List<FinishingPlan> findByStatus(
             FinishingPlanStatus status);
+
+    long countByStatus(FinishingPlanStatus status);
+
+    List<FinishingPlan> findTop5ByOrderByStartDateDesc();
 }

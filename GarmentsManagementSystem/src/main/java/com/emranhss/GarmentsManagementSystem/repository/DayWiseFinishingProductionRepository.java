@@ -26,4 +26,21 @@ from DayWiseFinishingProduction d
 where d.date=:date
 """)
     Integer getTodayFinishing(LocalDate date);
+
+    @Query("""
+select coalesce(sum(d.rejectQty),0)
+from DayWiseFinishingProduction d
+where d.date=:date
+""")
+    Integer getTodayReject(LocalDate date);
+
+    @Query("""
+select d
+from DayWiseFinishingProduction d
+where d.date=:date
+order by d.styleNo
+""")
+    List<DayWiseFinishingProduction> getTodayProductions(LocalDate date);
+
+
 }
