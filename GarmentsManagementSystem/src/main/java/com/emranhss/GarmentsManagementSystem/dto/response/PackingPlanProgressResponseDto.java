@@ -10,12 +10,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PackingPlanProgressResponseDto {
 
+    private Integer targetQty;
 
-    private Integer planInput;
-
+    private Integer pcsPerCarton;
 
     private Integer packedSoFar;
-
 
     private Integer remaining;
 

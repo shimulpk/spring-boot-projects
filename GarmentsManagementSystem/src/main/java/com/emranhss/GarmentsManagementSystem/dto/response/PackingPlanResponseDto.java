@@ -52,4 +52,10 @@ public class PackingPlanResponseDto {
 
     private PackingPlanStatus status;
 
+    private Integer packedSoFar;
+
+    private Integer remaining;
+
+    private Double progressPercentage;
+
 }

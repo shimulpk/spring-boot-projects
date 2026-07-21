@@ -14,7 +14,7 @@ public interface DayWisePackingProductionRepository extends JpaRepository<DayWis
 //     All Productions   of One Packing Plan
 
 
-    List<DayWisePackingProduction> findByPackingPlanId(
+    List<DayWisePackingProduction> findByPackingPlanIdOrderByDateAsc(
             Long packingPlanId);
 //2ta method same hoye gese nicherta use hobe
     @Query("""

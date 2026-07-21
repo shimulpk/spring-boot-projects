@@ -189,8 +189,7 @@ public class DayWisePackingProductionServiceImpl implements DayWisePackingProduc
 
         List<DayWisePackingProduction> productions =
                 dayWisePackingProductionRepository
-                        .findByPackingPlanId(
-                                packingPlanId);
+                        .findByPackingPlanIdOrderByDateAsc(packingPlanId);
 
         int packedSoFar =
                 productions.stream()
@@ -201,23 +200,38 @@ public class DayWisePackingProductionServiceImpl implements DayWisePackingProduc
                         .sum();
 
         int remaining =
-                packingPlan.getTotalOrderQty()
-                        - packedSoFar;
+                packingPlan.getInputQty() - packedSoFar;
 
         if (remaining < 0) {
             remaining = 0;
         }
 
         return new PackingPlanProgressResponseDto(
-                packingPlan.getTotalOrderQty(),
+                packingPlan.getInputQty(),
+
+                packingPlan.getPcsPerCarton(),
+
                 packedSoFar,
+
                 remaining
         );
     }
 
+    @Override
+    public List<DayWisePackingProductionResponseDto> getByPackingPlan(Long packingPlanId) {
+        return dayWisePackingProductionRepository
+                .findByPackingPlanIdOrderByDateAsc(packingPlanId)
+                .stream()
+                .map(DayWisePackingProductionMapper::toDto)
+                .toList();
+
+    }
+
     private void recalculateAndSavePackingPlan(PackingPlan packingPlan) {
-        List<DayWisePackingProduction> productions = dayWisePackingProductionRepository
-                .findByPackingPlanId(packingPlan.getId());
+        List<DayWisePackingProduction> productions =
+                dayWisePackingProductionRepository
+                        .findByPackingPlanIdOrderByDateAsc(
+                                packingPlan.getId());
 
         int totalPacked = productions.stream()
                 .mapToInt(p -> p.getTodayPackedQty() == null ? 0 : p.getTodayPackedQty())

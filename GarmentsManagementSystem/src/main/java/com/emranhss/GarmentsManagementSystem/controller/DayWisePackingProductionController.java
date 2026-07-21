@@ -69,4 +69,16 @@ public class DayWisePackingProductionController {
                 dayWisePackingProductionService.getProgress(
                         packingPlanId));
     }
+
+    @GetMapping("/packing-plan/{packingPlanId}")
+    public ResponseEntity<List<DayWisePackingProductionResponseDto>>
+    getByPackingPlan(
+            @PathVariable Long packingPlanId) {
+
+        return ResponseEntity.ok(
+                dayWisePackingProductionService
+                        .getByPackingPlan(
+                                packingPlanId));
+
+    }
 }

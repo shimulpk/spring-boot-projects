@@ -134,7 +134,7 @@ public class PackingPlanServiceImpl implements PackingPlanService {
                 packingPlanRepository.save(
                         packingPlan);
 
-        return PackingPlanMapper.toDto(saved);
+        return buildResponse(saved);
     }
 
     @Override
@@ -223,8 +223,7 @@ public class PackingPlanServiceImpl implements PackingPlanService {
                 packingPlanRepository.save(
                         packingPlan);
 
-        return PackingPlanMapper.toDto(
-                updated);
+        return buildResponse(updated);
     }
 
     @Override
@@ -235,7 +234,7 @@ public class PackingPlanServiceImpl implements PackingPlanService {
                                 new RuntimeException(
                                         "Packing Plan Not Found"));
 
-        return PackingPlanMapper.toDto(
+        return buildResponse(
                 packingPlan);
     }
 
@@ -243,7 +242,7 @@ public class PackingPlanServiceImpl implements PackingPlanService {
     public List<PackingPlanResponseDto> getAll() {
         return packingPlanRepository.findAll()
                 .stream()
-                .map(PackingPlanMapper::toDto)
+                .map(this::buildResponse)
                 .toList();
     }
 
@@ -257,5 +256,43 @@ public class PackingPlanServiceImpl implements PackingPlanService {
 
         packingPlanRepository.delete(
                 packingPlan);
+    }
+
+
+    private PackingPlanResponseDto buildResponse(
+            PackingPlan packingPlan) {
+
+        PackingPlanResponseDto dto =
+                PackingPlanMapper.toDto(
+                        packingPlan);
+
+        int input =
+                packingPlan.getInputQty() == null
+                        ? 0
+                        : packingPlan.getInputQty();
+
+        int packed =
+                packingPlan.getTotalPackedQty() == null
+                        ? 0
+                        : packingPlan.getTotalPackedQty();
+
+        dto.setPackedSoFar(
+                packed);
+
+        dto.setRemaining(
+                Math.max(
+                        0,
+                        input - packed));
+
+        double progress =
+                input == 0
+                        ? 0
+                        : (packed * 100.0) / input;
+
+        dto.setProgressPercentage(
+                Math.round(progress * 100.0) / 100.0);
+
+        return dto;
+
     }
 }

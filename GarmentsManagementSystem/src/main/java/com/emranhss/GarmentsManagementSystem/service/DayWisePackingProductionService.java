@@ -31,4 +31,7 @@ public interface DayWisePackingProductionService {
 
     PackingPlanProgressResponseDto getProgress(
             Long packingPlanId);
+
+    List<DayWisePackingProductionResponseDto> getByPackingPlan(
+            Long packingPlanId);
 }
