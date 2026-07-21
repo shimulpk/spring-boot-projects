@@ -5,6 +5,7 @@ import com.emranhss.GarmentsManagementSystem.dto.response.UomResponseDto;
 import com.emranhss.GarmentsManagementSystem.service.UomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/uoms")
 @RequiredArgsConstructor
+@PreAuthorize("hasAnyRole('ADMIN','MERCHANDISER')")
 public class UomController {
 
     private final UomService uomService;

@@ -1,6 +1,7 @@
 package com.emranhss.GarmentsManagementSystem.repository;
 
 import com.emranhss.GarmentsManagementSystem.entity.DayWisePackingProduction;
+import com.emranhss.GarmentsManagementSystem.entity.PackingPlan;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -46,7 +47,12 @@ order by d.styleNo
 """)
     List<DayWisePackingProduction> getTodayProductions(LocalDate date);
 
-
+    @Query("""
+select distinct d.packingPlan
+from DayWisePackingProduction d
+order by d.packingPlan.packingPlanId
+""")
+    List<PackingPlan> getPackingPlansWithProduction();
 
 
 }

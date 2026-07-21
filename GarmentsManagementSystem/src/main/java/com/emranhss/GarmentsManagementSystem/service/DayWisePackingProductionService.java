@@ -3,6 +3,7 @@ package com.emranhss.GarmentsManagementSystem.service;
 import com.emranhss.GarmentsManagementSystem.dto.request.DayWisePackingProductionRequestDto;
 import com.emranhss.GarmentsManagementSystem.dto.response.DayWisePackingProductionResponseDto;
 import com.emranhss.GarmentsManagementSystem.dto.response.PackingPlanProgressResponseDto;
+import com.emranhss.GarmentsManagementSystem.dto.response.PackingProductionSummaryResponseDto;
 
 import java.util.List;
 
@@ -34,4 +35,7 @@ public interface DayWisePackingProductionService {
 
     List<DayWisePackingProductionResponseDto> getByPackingPlan(
             Long packingPlanId);
+
+
+    List<PackingProductionSummaryResponseDto> getSummary();
 }

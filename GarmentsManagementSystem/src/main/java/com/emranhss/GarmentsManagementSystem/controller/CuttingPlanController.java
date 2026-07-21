@@ -5,6 +5,7 @@ import com.emranhss.GarmentsManagementSystem.dto.response.CuttingPlanResponseDto
 import com.emranhss.GarmentsManagementSystem.service.CuttingPlanService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/cutting-plans")
 @RequiredArgsConstructor
+@PreAuthorize("hasAnyRole('ADMIN','CUTTING_MANAGER','PRODUCTION_MANAGER')")
 public class CuttingPlanController {
 
     private final CuttingPlanService cuttingPlanService;

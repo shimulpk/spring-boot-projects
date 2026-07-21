@@ -5,6 +5,7 @@ import com.emranhss.GarmentsManagementSystem.dto.response.VendorResponseDto;
 import com.emranhss.GarmentsManagementSystem.service.VendorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/vendors")
 @RequiredArgsConstructor
+@PreAuthorize("hasAnyRole('ADMIN','PURCHASE_MANAGER')")
 public class VendorController {
     private final VendorService vendorService;
 

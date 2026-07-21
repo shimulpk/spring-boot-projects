@@ -5,6 +5,7 @@ import com.emranhss.GarmentsManagementSystem.dto.response.BomStyleResponseDto;
 import com.emranhss.GarmentsManagementSystem.service.BomStyleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/styles")
 @RequiredArgsConstructor
+@PreAuthorize("hasAnyRole('ADMIN','MERCHANDISER')")
 public class BomStyleController {
     private final BomStyleService bomStyleService;
 

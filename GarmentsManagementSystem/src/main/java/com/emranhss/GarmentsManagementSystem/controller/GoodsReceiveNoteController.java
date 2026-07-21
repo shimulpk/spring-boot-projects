@@ -5,6 +5,7 @@ import com.emranhss.GarmentsManagementSystem.dto.request.GoodsReceiveNoteRequest
 import com.emranhss.GarmentsManagementSystem.dto.response.GoodsReceiveNoteResponseDto;
 import com.emranhss.GarmentsManagementSystem.service.GoodsReceiveNoteService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/grns")
 @RequiredArgsConstructor
+@PreAuthorize("hasAnyRole('ADMIN','STORE_MANAGER')")
 public class GoodsReceiveNoteController {
 
     private final GoodsReceiveNoteService goodsReceiveNoteService;

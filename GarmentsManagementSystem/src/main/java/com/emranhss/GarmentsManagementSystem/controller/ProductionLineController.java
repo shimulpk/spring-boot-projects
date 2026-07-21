@@ -5,6 +5,7 @@ import com.emranhss.GarmentsManagementSystem.dto.response.ProductionLineResponse
 import com.emranhss.GarmentsManagementSystem.service.ProductionLineService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/production-lines")
 @RequiredArgsConstructor
+@PreAuthorize("hasAnyRole('ADMIN','PRODUCTION_MANAGER')")
 public class ProductionLineController {
 
     private final ProductionLineService productionLineService;

@@ -6,6 +6,7 @@ import com.emranhss.GarmentsManagementSystem.dto.response.DayWiseCuttingProducti
 import com.emranhss.GarmentsManagementSystem.service.DayWiseCuttingProductionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/day-wise-cutting-production")
 @RequiredArgsConstructor
+@PreAuthorize("hasAnyRole('ADMIN','CUTTING_MANAGER','PRODUCTION_MANAGER')")
 public class DayWiseCuttingProductionController {
 
     private final DayWiseCuttingProductionService service;

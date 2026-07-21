@@ -5,6 +5,7 @@ import com.emranhss.GarmentsManagementSystem.dto.response.StoreRequisitionRespon
 import com.emranhss.GarmentsManagementSystem.service.StoreRequisitionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/store-requisitions")
 @RequiredArgsConstructor
+@PreAuthorize("hasAnyRole('ADMIN','STORE_MANAGER')")
 public class StoreRequisitionController {
 
     private final StoreRequisitionService storeRequisitionService;

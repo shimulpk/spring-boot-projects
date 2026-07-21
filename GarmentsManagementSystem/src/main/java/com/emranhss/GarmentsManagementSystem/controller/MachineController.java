@@ -5,6 +5,7 @@ import com.emranhss.GarmentsManagementSystem.dto.response.MachineResponseDto;
 import com.emranhss.GarmentsManagementSystem.service.MachineService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/machines")
 @RequiredArgsConstructor
-
+@PreAuthorize("hasAnyRole('ADMIN','PRODUCTION_MANAGER')")
 public class MachineController {
 
     private final MachineService machineService;

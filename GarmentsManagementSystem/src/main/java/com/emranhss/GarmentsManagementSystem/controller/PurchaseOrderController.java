@@ -5,6 +5,7 @@ import com.emranhss.GarmentsManagementSystem.dto.response.PurchaseOrderResponseD
 import com.emranhss.GarmentsManagementSystem.service.PurchaseOrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/purchase-orders")
 @RequiredArgsConstructor
+@PreAuthorize("hasAnyRole('ADMIN','PURCHASE_MANAGER')")
 public class PurchaseOrderController {
 
     private final PurchaseOrderService purchaseOrderService;

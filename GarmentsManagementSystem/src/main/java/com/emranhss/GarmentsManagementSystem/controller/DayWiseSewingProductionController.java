@@ -7,6 +7,7 @@ import com.emranhss.GarmentsManagementSystem.dto.response.SewingPlanProgressResp
 import com.emranhss.GarmentsManagementSystem.service.DayWiseSewingProductionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/day-wise-sewing-productions")
 @RequiredArgsConstructor
+@PreAuthorize("hasAnyRole('ADMIN','SEWING_MANAGER','PRODUCTION_MANAGER')")
 public class DayWiseSewingProductionController {
 
     private final DayWiseSewingProductionService dayWiseSewingProductionService;

@@ -4,6 +4,7 @@ import com.emranhss.GarmentsManagementSystem.dto.mapper.DayWisePackingProduction
 import com.emranhss.GarmentsManagementSystem.dto.request.DayWisePackingProductionRequestDto;
 import com.emranhss.GarmentsManagementSystem.dto.response.DayWisePackingProductionResponseDto;
 import com.emranhss.GarmentsManagementSystem.dto.response.PackingPlanProgressResponseDto;
+import com.emranhss.GarmentsManagementSystem.dto.response.PackingProductionSummaryResponseDto;
 import com.emranhss.GarmentsManagementSystem.entity.DayWisePackingProduction;
 import com.emranhss.GarmentsManagementSystem.entity.PackingPlan;
 import com.emranhss.GarmentsManagementSystem.enums.PackingPlanStatus;
@@ -225,6 +226,60 @@ public class DayWisePackingProductionServiceImpl implements DayWisePackingProduc
                 .map(DayWisePackingProductionMapper::toDto)
                 .toList();
 
+    }
+
+    @Override
+    public List<PackingProductionSummaryResponseDto> getSummary() {
+        List<PackingPlan> packingPlans =
+                dayWisePackingProductionRepository
+                        .getPackingPlansWithProduction();
+
+        return packingPlans.stream()
+                .map(plan -> {
+
+                    int packedSoFar =
+                            plan.getTotalPackedQty() == null
+                                    ? 0
+                                    : plan.getTotalPackedQty();
+
+                    int targetQty =
+                            plan.getInputQty() == null
+                                    ? 0
+                                    : plan.getInputQty();
+
+                    int remaining =
+                            targetQty - packedSoFar;
+
+                    if (remaining < 0) {
+                        remaining = 0;
+                    }
+
+                    return new PackingProductionSummaryResponseDto(
+
+                            plan.getId(),
+
+                            plan.getPackingPlanId(),
+
+                            plan.getBuyerName(),
+
+                            plan.getOrderNo(),
+
+                            plan.getStyleNo(),
+
+                            plan.getColor(),
+
+                            targetQty,
+
+                            packedSoFar,
+
+                            remaining,
+
+                            plan.getStatus().name()
+
+                    );
+
+                })
+                .toList();
     }
 
     private void recalculateAndSavePackingPlan(PackingPlan packingPlan) {

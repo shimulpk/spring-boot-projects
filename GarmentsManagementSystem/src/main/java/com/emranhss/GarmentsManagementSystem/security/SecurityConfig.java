@@ -44,12 +44,21 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(auth -> auth
 
+                        // Public APIs
                         .requestMatchers(
                                 "/api/auth/login",
                                 "/api/auth/forgot-password",
                                 "/api/auth/reset-password",
-                                "/**"
+                                "/api/auth/verify-email"
                         ).permitAll()
+
+                        // Swagger (optional)
+                        .requestMatchers(
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**"
+                        ).permitAll()
+
+                        // All other APIs require authentication
                         .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider())
