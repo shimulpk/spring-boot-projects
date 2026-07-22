@@ -41,6 +41,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             FilterChain filterChain
     ) throws ServletException, IOException {
 
+
+
         // ============================================================
         // STEP 1: Read the Authorization header
         // Example:
@@ -100,6 +102,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 UserDetails userDetails =
                         userDetailsService.loadUserByUsername(email);
 
+               
+
                 // ====================================================
                 // STEP 8: Create Authentication object
                 //
@@ -138,6 +142,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 // ====================================================
                 SecurityContextHolder.getContext()
                         .setAuthentication(authToken);
+
+
             }
         }
 

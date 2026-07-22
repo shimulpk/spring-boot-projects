@@ -4,6 +4,7 @@ import com.emranhss.GarmentsManagementSystem.dto.response.ProductionDashboardRes
 import com.emranhss.GarmentsManagementSystem.service.ProductionDashboardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/dashboard/production")
 @RequiredArgsConstructor
+@PreAuthorize("hasRole('PRODUCTION_MANAGER')")
 public class ProductionDashboardController {
 
     private final ProductionDashboardService productionDashboardService;
