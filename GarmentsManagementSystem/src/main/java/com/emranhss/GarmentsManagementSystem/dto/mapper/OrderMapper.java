@@ -42,6 +42,8 @@ public class OrderMapper {
         dto.setOrderId(order.getOrderId());
         dto.setPoNumber(order.getPoNumber());
 
+
+
         dto.setOrderDate(order.getOrderDate());
         dto.setShipDate(order.getShipDate());
 
@@ -54,7 +56,7 @@ public class OrderMapper {
         dto.setVatPercent(order.getVatPercent());
         dto.setVat(order.getVat());
         dto.setGrandTotal(order.getGrandTotal());
-        dto.setTotalAmount(order.getTotalAmount());
+
 
         // Buyer
 

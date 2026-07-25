@@ -7,9 +7,12 @@ import com.emranhss.GarmentsManagementSystem.dto.response.DayWiseFinishingProduc
 import com.emranhss.GarmentsManagementSystem.dto.response.FinishingProgressResponseDto;
 import com.emranhss.GarmentsManagementSystem.entity.DayWiseFinishingProduction;
 import com.emranhss.GarmentsManagementSystem.entity.FinishingPlan;
+
 import com.emranhss.GarmentsManagementSystem.enums.FinishingPlanStatus;
+
 import com.emranhss.GarmentsManagementSystem.repository.DayWiseFinishingProductionRepository;
 import com.emranhss.GarmentsManagementSystem.repository.FinishingPlanRepository;
+import com.emranhss.GarmentsManagementSystem.repository.OrderRepository;
 import com.emranhss.GarmentsManagementSystem.service.DayWiseFinishingProductionService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +28,8 @@ public class DayWiseFinishingProductionServiceImpl implements DayWiseFinishingPr
     private final DayWiseFinishingProductionRepository dayWiseFinishingProductionRepository;
 
     private final FinishingPlanRepository finishingPlanRepository;
+
+    private final OrderRepository orderRepository;
 
 
     @Override
@@ -213,6 +218,8 @@ public class DayWiseFinishingProductionServiceImpl implements DayWiseFinishingPr
 
         if (totalPass >= finishingPlan.getTargetQty()) {
             finishingPlan.setStatus(FinishingPlanStatus.COMPLETED);
+
+
         } else {
 
             finishingPlan.setStatus(FinishingPlanStatus.IN_PROGRESS);

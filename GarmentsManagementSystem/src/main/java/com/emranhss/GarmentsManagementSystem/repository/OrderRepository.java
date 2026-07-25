@@ -17,6 +17,8 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     long countByStatus(String status);
 
+    List<Order> findAllByOrderByShipDateAsc();
+
 
 
 }

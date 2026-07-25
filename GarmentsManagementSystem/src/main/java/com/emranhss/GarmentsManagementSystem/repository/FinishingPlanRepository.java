@@ -1,6 +1,7 @@
 package com.emranhss.GarmentsManagementSystem.repository;
 
 import com.emranhss.GarmentsManagementSystem.entity.FinishingPlan;
+import com.emranhss.GarmentsManagementSystem.entity.PackingPlan;
 import com.emranhss.GarmentsManagementSystem.enums.FinishingPlanStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -16,6 +17,8 @@ public interface FinishingPlanRepository extends JpaRepository<FinishingPlan, Lo
     Optional<FinishingPlan> findByFinishingPlanId(
             String finishingPlanId);
 
+
+
 //    Find by Status
 
     List<FinishingPlan> findByStatus(
@@ -24,4 +27,6 @@ public interface FinishingPlanRepository extends JpaRepository<FinishingPlan, Lo
     long countByStatus(FinishingPlanStatus status);
 
     List<FinishingPlan> findTop5ByOrderByStartDateDesc();
+
+    Optional<FinishingPlan> findBySewingPlan_Id(Long sewingPlanId);
 }

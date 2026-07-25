@@ -7,6 +7,7 @@ import com.emranhss.GarmentsManagementSystem.entity.BomStyle;
 import com.emranhss.GarmentsManagementSystem.entity.Buyer;
 import com.emranhss.GarmentsManagementSystem.entity.Order;
 import com.emranhss.GarmentsManagementSystem.entity.OrderItem;
+import com.emranhss.GarmentsManagementSystem.enums.ProductionStage;
 import com.emranhss.GarmentsManagementSystem.repository.BomStyleRepository;
 import com.emranhss.GarmentsManagementSystem.repository.BuyerRepository;
 import com.emranhss.GarmentsManagementSystem.repository.OrderRepository;
@@ -43,6 +44,7 @@ public class OrderServiceImpl implements OrderService {
 
         order.setBuyer(buyer);
         order.setStyle(style);
+
 
         buildOrderItems(order, request);
 
@@ -205,6 +207,6 @@ public class OrderServiceImpl implements OrderService {
         order.setVatPercent(vatPercent);
         order.setVat(vat);
         order.setGrandTotal(grandTotal);
-        order.setTotalAmount(grandTotal);
+
     }
 }

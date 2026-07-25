@@ -5,12 +5,11 @@ import com.emranhss.GarmentsManagementSystem.dto.request.DayWiseSewingProduction
 import com.emranhss.GarmentsManagementSystem.dto.response.DayWiseSewingProductionResponseDto;
 import com.emranhss.GarmentsManagementSystem.dto.response.LineWiseSewingProgressResponseDto;
 import com.emranhss.GarmentsManagementSystem.dto.response.SewingPlanProgressResponseDto;
-import com.emranhss.GarmentsManagementSystem.entity.DayWiseSewingProduction;
-import com.emranhss.GarmentsManagementSystem.entity.ProductionLine;
-import com.emranhss.GarmentsManagementSystem.entity.SewingPlan;
-import com.emranhss.GarmentsManagementSystem.entity.SewingTarget;
+import com.emranhss.GarmentsManagementSystem.entity.*;
+
 import com.emranhss.GarmentsManagementSystem.enums.SewingPlanStatus;
 import com.emranhss.GarmentsManagementSystem.repository.DayWiseSewingProductionRepository;
+import com.emranhss.GarmentsManagementSystem.repository.OrderRepository;
 import com.emranhss.GarmentsManagementSystem.repository.ProductionLineRepository;
 import com.emranhss.GarmentsManagementSystem.repository.SewingPlanRepository;
 import com.emranhss.GarmentsManagementSystem.service.DayWiseSewingProductionService;
@@ -31,6 +30,7 @@ public class DayWiseSewingProductionServiceImpl implements DayWiseSewingProducti
     private final SewingPlanRepository sewingPlanRepository;
 
     private final ProductionLineRepository productionLineRepository;
+    private final OrderRepository orderRepository;
 
    
 
@@ -318,6 +318,8 @@ public class DayWiseSewingProductionServiceImpl implements DayWiseSewingProducti
 
             sewingPlan.setStatus(
                     SewingPlanStatus.COMPLETED);
+
+
         }
 
         sewingPlanRepository.save(

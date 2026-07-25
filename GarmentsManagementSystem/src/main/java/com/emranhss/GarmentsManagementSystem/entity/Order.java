@@ -1,5 +1,6 @@
 package com.emranhss.GarmentsManagementSystem.entity;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -53,7 +54,7 @@ public class Order {
 
     private Integer totalQuantity;
 
-    private BigDecimal totalAmount;
+
 
     @OneToMany(
             mappedBy = "order",

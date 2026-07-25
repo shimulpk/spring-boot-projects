@@ -6,9 +6,12 @@ import com.emranhss.GarmentsManagementSystem.dto.response.DayWisePackingProducti
 import com.emranhss.GarmentsManagementSystem.dto.response.PackingPlanProgressResponseDto;
 import com.emranhss.GarmentsManagementSystem.dto.response.PackingProductionSummaryResponseDto;
 import com.emranhss.GarmentsManagementSystem.entity.DayWisePackingProduction;
+import com.emranhss.GarmentsManagementSystem.entity.Order;
 import com.emranhss.GarmentsManagementSystem.entity.PackingPlan;
 import com.emranhss.GarmentsManagementSystem.enums.PackingPlanStatus;
+import com.emranhss.GarmentsManagementSystem.enums.ProductionStage;
 import com.emranhss.GarmentsManagementSystem.repository.DayWisePackingProductionRepository;
+import com.emranhss.GarmentsManagementSystem.repository.OrderRepository;
 import com.emranhss.GarmentsManagementSystem.repository.PackingPlanRepository;
 import com.emranhss.GarmentsManagementSystem.service.DayWisePackingProductionService;
 import jakarta.transaction.Transactional;
@@ -24,6 +27,8 @@ public class DayWisePackingProductionServiceImpl implements DayWisePackingProduc
     private final DayWisePackingProductionRepository dayWisePackingProductionRepository;
 
     private final PackingPlanRepository packingPlanRepository;
+
+    private final OrderRepository orderRepository;
 
     @Override
     public DayWisePackingProductionResponseDto create(DayWisePackingProductionRequestDto request) {
@@ -302,6 +307,8 @@ public class DayWisePackingProductionServiceImpl implements DayWisePackingProduc
 
         if (totalPacked >= packingPlan.getTotalOrderQty()) {
             packingPlan.setStatus(PackingPlanStatus.READY_TO_SHIP);
+
+
         } else {
 
             packingPlan.setStatus(PackingPlanStatus.PENDING);

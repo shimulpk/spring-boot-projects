@@ -1,5 +1,6 @@
 package com.emranhss.GarmentsManagementSystem.dto.response;
 
+import com.emranhss.GarmentsManagementSystem.enums.ProductionStage;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -45,6 +46,8 @@ public class OrderResponseDto {
     private BigDecimal grandTotal;
 
     private BigDecimal totalAmount;
+
+    private ProductionStage currentStage;
 
     private List<OrderItemResponseDto> items;
 }

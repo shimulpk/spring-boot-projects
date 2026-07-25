@@ -6,9 +6,12 @@ import com.emranhss.GarmentsManagementSystem.dto.response.CuttingPlanProgressRes
 import com.emranhss.GarmentsManagementSystem.dto.response.DayWiseCuttingProductionResponseDto;
 import com.emranhss.GarmentsManagementSystem.entity.CuttingPlan;
 import com.emranhss.GarmentsManagementSystem.entity.DayWiseCuttingProduction;
+
 import com.emranhss.GarmentsManagementSystem.enums.CuttingPlanStatus;
+
 import com.emranhss.GarmentsManagementSystem.repository.CuttingPlanRepository;
 import com.emranhss.GarmentsManagementSystem.repository.DayWiseCuttingProductionRepository;
+import com.emranhss.GarmentsManagementSystem.repository.OrderRepository;
 import com.emranhss.GarmentsManagementSystem.service.DayWiseCuttingProductionService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +26,8 @@ public class DayWiseCuttingProductionServiceImpl implements DayWiseCuttingProduc
 
     private final DayWiseCuttingProductionRepository productionRepository;
     private final CuttingPlanRepository cuttingPlanRepository;
+    private final OrderRepository orderRepository;
+
 
     @Override
     public DayWiseCuttingProductionResponseDto create(DayWiseCuttingProductionRequestDto request) {
@@ -61,6 +66,7 @@ public class DayWiseCuttingProductionServiceImpl implements DayWiseCuttingProduc
                     CuttingPlanStatus.COMPLETED);
 
             cuttingPlanRepository.save(plan);
+
         }
 
         return DayWiseCuttingProductionMapper
