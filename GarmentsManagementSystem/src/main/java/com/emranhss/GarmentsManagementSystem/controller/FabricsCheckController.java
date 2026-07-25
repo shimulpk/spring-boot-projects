@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/fabric-check")
 @RequiredArgsConstructor
-@PreAuthorize("hasAnyRole('ADMIN','MERCHANDISER')")
+@PreAuthorize("hasAnyRole('ADMIN','MERCHANDISER','CUTTING_MANAGER')")
 public class FabricsCheckController {
 
     private final FabricsCheckService fabricsCheckService;

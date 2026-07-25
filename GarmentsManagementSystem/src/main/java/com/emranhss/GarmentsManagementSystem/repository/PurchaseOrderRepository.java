@@ -18,6 +18,8 @@ public interface PurchaseOrderRepository extends JpaRepository<PurchaseOrder, Lo
     List<PurchaseOrder> findAllByStatus(PurchaseOrderStatus status);
     boolean existsByStoreRequisitionId(Long storeRequisitionId);
 
+   
+
     long countByStatus(PurchaseOrderStatus status);
 
     long countByPoDate(LocalDate poDate);

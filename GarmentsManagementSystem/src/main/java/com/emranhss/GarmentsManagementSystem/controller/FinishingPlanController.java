@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/finishing-plans")
 @RequiredArgsConstructor
-@PreAuthorize("hasAnyRole('ADMIN','FINISHING_MANAGER','PRODUCTION_MANAGER')")
+@PreAuthorize("hasAnyRole('ADMIN','FINISHING_MANAGER','PRODUCTION_MANAGER','PACKING_MANAGER')")
 public class FinishingPlanController {
 
     private final FinishingPlanService finishingPlanService;

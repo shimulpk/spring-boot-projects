@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/production-lines")
 @RequiredArgsConstructor
-@PreAuthorize("hasAnyRole('ADMIN','PRODUCTION_MANAGER')")
+@PreAuthorize("hasAnyRole('ADMIN','PRODUCTION_MANAGER','SEWING_MANAGER')")
 public class ProductionLineController {
 
     private final ProductionLineService productionLineService;

@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/orders")
 @RequiredArgsConstructor
-@PreAuthorize("hasAnyRole('ADMIN','MERCHANDISER')")
+@PreAuthorize("hasAnyRole('ADMIN','MERCHANDISER','CUTTING_MANAGER')")
 public class OrderController {
 
     private final OrderService orderService;

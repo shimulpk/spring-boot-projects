@@ -9,6 +9,7 @@ import com.emranhss.GarmentsManagementSystem.entity.StoreRequisition;
 import com.emranhss.GarmentsManagementSystem.entity.StoreRequisitionItem;
 import com.emranhss.GarmentsManagementSystem.enums.StoreRequisitionStatus;
 import com.emranhss.GarmentsManagementSystem.repository.ItemRepository;
+import com.emranhss.GarmentsManagementSystem.repository.PurchaseOrderRepository;
 import com.emranhss.GarmentsManagementSystem.repository.StoreRequisitionRepository;
 import com.emranhss.GarmentsManagementSystem.service.StoreRequisitionService;
 import jakarta.transaction.Transactional;
@@ -24,6 +25,8 @@ public class StoreRequisitionServiceImpl implements StoreRequisitionService {
 
     private final StoreRequisitionRepository storeRequisitionRepository;
     private final ItemRepository itemRepository;
+
+    private final PurchaseOrderRepository purchaseOrderRepository;
 
 
     @Override
@@ -226,6 +229,9 @@ public class StoreRequisitionServiceImpl implements StoreRequisitionService {
         return storeRequisitionRepository
                 .findByStatus(StoreRequisitionStatus.APPROVED)
                 .stream()
+                .filter(requisition ->
+                        !purchaseOrderRepository.existsByStoreRequisitionId(
+                                requisition.getId()))
                 .map(StoreRequisitionMapper::toDto)
                 .toList();
     }
