@@ -19,4 +19,6 @@ public interface SewingPlanRepository extends JpaRepository<SewingPlan, Long> {
     long countByStatus(SewingPlanStatus status);
 
     List<SewingPlan> findTop5ByOrderByStartDateDesc();
+
+    boolean existsByCuttingPlanId(Long cuttingPlanId);
 }

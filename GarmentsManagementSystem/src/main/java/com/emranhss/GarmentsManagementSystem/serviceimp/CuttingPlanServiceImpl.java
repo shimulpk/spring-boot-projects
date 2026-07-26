@@ -30,6 +30,8 @@ public class CuttingPlanServiceImpl implements CuttingPlanService {
 
     private final DayWiseCuttingProductionRepository dayWiseCuttingProductionRepository;
 
+    private final SewingPlanRepository sewingPlanRepository;
+
     @Override
     public CuttingPlanResponseDto create(CuttingPlanRequestDto request) {
         Buyer buyer =
@@ -209,6 +211,18 @@ public class CuttingPlanServiceImpl implements CuttingPlanService {
                 .stream()
                 .map(CuttingPlanMapper::toDto)
                 .toList();
+    }
+
+    @Override
+    public List<CuttingPlanResponseDto> getAvailableForSewingPlan() {
+        return cuttingPlanRepository
+                .findByStatus(CuttingPlanStatus.COMPLETED)
+                .stream()
+                .filter(plan ->
+                        !sewingPlanRepository.existsByCuttingPlanId(plan.getId()))
+                .map(CuttingPlanMapper::toDto)
+                .toList();
+
     }
 
 

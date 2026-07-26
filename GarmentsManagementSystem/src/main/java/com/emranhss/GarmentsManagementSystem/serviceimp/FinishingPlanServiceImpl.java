@@ -1,8 +1,10 @@
 package com.emranhss.GarmentsManagementSystem.serviceimp;
 
 import com.emranhss.GarmentsManagementSystem.dto.mapper.FinishingPlanMapper;
+import com.emranhss.GarmentsManagementSystem.dto.mapper.SewingPlanMapper;
 import com.emranhss.GarmentsManagementSystem.dto.request.FinishingPlanRequestDto;
 import com.emranhss.GarmentsManagementSystem.dto.response.FinishingPlanResponseDto;
+import com.emranhss.GarmentsManagementSystem.dto.response.SewingPlanResponseDto;
 import com.emranhss.GarmentsManagementSystem.entity.FinishingPlan;
 import com.emranhss.GarmentsManagementSystem.entity.SewingPlan;
 import com.emranhss.GarmentsManagementSystem.enums.FinishingPlanStatus;
@@ -197,5 +199,18 @@ public class FinishingPlanServiceImpl implements FinishingPlanService {
 
         finishingPlanRepository.delete(
                 finishingPlan);
+    }
+
+    @Override
+    public List<SewingPlanResponseDto> getAvailableSewingPlans() {
+
+        return sewingPlanRepository
+                .findByStatus(SewingPlanStatus.COMPLETED)
+                .stream()
+                .filter(plan ->
+                        !finishingPlanRepository.existsBySewingPlanId(plan.getId()))
+                .map(SewingPlanMapper::toDto)
+                .toList();
+
     }
 }

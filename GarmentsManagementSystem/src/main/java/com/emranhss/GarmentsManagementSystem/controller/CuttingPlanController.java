@@ -65,4 +65,13 @@ public class CuttingPlanController {
                 cuttingPlanService.getCompletedPlans());
 
     }
+
+    @GetMapping("/available-for-sewing-plan")
+    public ResponseEntity<List<CuttingPlanResponseDto>>
+    getAvailableForSewingPlan() {
+
+        return ResponseEntity.ok(
+                cuttingPlanService.getAvailableForSewingPlan());
+
+    }
 }

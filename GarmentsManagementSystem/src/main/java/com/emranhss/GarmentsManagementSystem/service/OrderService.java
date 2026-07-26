@@ -18,4 +18,10 @@ public interface OrderService {
     void delete(Long id);
 
     List<OrderResponseDto> getByBuyer(Long buyerId);
+
+    List<OrderResponseDto> getAvailableOrdersByBuyer(Long buyerId);
+
+    List<OrderResponseDto> getAvailableForRawMaterialCheck();
+
+    List<OrderResponseDto> getAvailableForFabricCheck();
 }

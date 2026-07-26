@@ -1,11 +1,14 @@
 package com.emranhss.GarmentsManagementSystem.serviceimp;
 
+import com.emranhss.GarmentsManagementSystem.dto.mapper.FinishingPlanMapper;
 import com.emranhss.GarmentsManagementSystem.dto.mapper.PackingPlanMapper;
 import com.emranhss.GarmentsManagementSystem.dto.request.PackingPlanRequestDto;
+import com.emranhss.GarmentsManagementSystem.dto.response.FinishingPlanResponseDto;
 import com.emranhss.GarmentsManagementSystem.dto.response.PackingPlanResponseDto;
 import com.emranhss.GarmentsManagementSystem.entity.FinishingPlan;
 import com.emranhss.GarmentsManagementSystem.entity.Order;
 import com.emranhss.GarmentsManagementSystem.entity.PackingPlan;
+import com.emranhss.GarmentsManagementSystem.enums.FinishingPlanStatus;
 import com.emranhss.GarmentsManagementSystem.enums.PackingPlanStatus;
 import com.emranhss.GarmentsManagementSystem.repository.FinishingPlanRepository;
 import com.emranhss.GarmentsManagementSystem.repository.PackingPlanRepository;
@@ -23,6 +26,7 @@ public class PackingPlanServiceImpl implements PackingPlanService {
 
     private final PackingPlanRepository packingPlanRepository;
     private final FinishingPlanRepository finishingPlanRepository;
+
 
 
 
@@ -256,6 +260,28 @@ public class PackingPlanServiceImpl implements PackingPlanService {
 
         packingPlanRepository.delete(
                 packingPlan);
+    }
+
+    @Override
+    public List<FinishingPlanResponseDto> getAvailableFinishingPlans() {
+        return finishingPlanRepository
+                .findByStatus(FinishingPlanStatus.COMPLETED)
+                .stream()
+                .filter(plan ->
+                        !packingPlanRepository.existsByFinishingPlanId(plan.getId()))
+                .map(FinishingPlanMapper::toDto)
+                .toList();
+    }
+
+    @Override
+    public List<PackingPlanResponseDto> getAvailableForDayWisePacking() {
+        return packingPlanRepository
+                .findAll()
+                .stream()
+                .filter(plan ->
+                        plan.getStatus() != PackingPlanStatus.READY_TO_SHIP)
+                .map(PackingPlanMapper::toDto)
+                .toList();
     }
 
 

@@ -8,9 +8,7 @@ import com.emranhss.GarmentsManagementSystem.entity.Buyer;
 import com.emranhss.GarmentsManagementSystem.entity.Order;
 import com.emranhss.GarmentsManagementSystem.entity.OrderItem;
 import com.emranhss.GarmentsManagementSystem.enums.ProductionStage;
-import com.emranhss.GarmentsManagementSystem.repository.BomStyleRepository;
-import com.emranhss.GarmentsManagementSystem.repository.BuyerRepository;
-import com.emranhss.GarmentsManagementSystem.repository.OrderRepository;
+import com.emranhss.GarmentsManagementSystem.repository.*;
 import com.emranhss.GarmentsManagementSystem.service.OrderService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +24,9 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final BuyerRepository buyerRepository;
     private final BomStyleRepository bomStyleRepository;
+    private final RmcCheckRepository rmcCheckRepository;
+    private final FabricsCheckRepository fabricCheckRepository;
+
 
     @Override
     public OrderResponseDto create(OrderRequestDto request) {
@@ -127,6 +128,35 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderResponseDto> getByBuyer(Long buyerId) {
         return orderRepository.findByBuyerId(buyerId)
                 .stream()
+                .map(OrderMapper::toDto)
+                .toList();
+    }
+
+    @Override
+    public List<OrderResponseDto> getAvailableOrdersByBuyer(Long buyerId) {
+        return orderRepository
+                .findAvailableOrdersByBuyer(buyerId)
+                .stream()
+                .map(OrderMapper::toDto)
+                .toList();
+    }
+
+    @Override
+    public List<OrderResponseDto> getAvailableForRawMaterialCheck() {
+        return orderRepository.findAll()
+                .stream()
+                .filter(order ->
+                        !rmcCheckRepository.existsByOrderId(order.getId()))
+                .map(OrderMapper::toDto)
+                .toList();
+    }
+
+    @Override
+    public List<OrderResponseDto> getAvailableForFabricCheck() {
+        return orderRepository.findAll()
+                .stream()
+                .filter(order ->
+                        !fabricCheckRepository.existsByOrderId(order.getId()))
                 .map(OrderMapper::toDto)
                 .toList();
     }

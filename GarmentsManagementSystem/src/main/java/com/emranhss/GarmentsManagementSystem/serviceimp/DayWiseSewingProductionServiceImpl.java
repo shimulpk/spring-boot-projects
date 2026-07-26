@@ -313,12 +313,26 @@ public class DayWiseSewingProductionServiceImpl implements DayWiseSewingProducti
 
 //         Auto Complete Sewing Plan  Output Qty reaches Input Received Qty
 
-        if (totalOutput >=
-                sewingPlan.getInputReceivedQty()) {
+        // =====================================
+// Auto Update Sewing Plan Status
+// =====================================
+
+        if (totalOutput == 0) {
+
+            sewingPlan.setStatus(
+                    SewingPlanStatus.PENDING);
+
+        }
+        else if (totalOutput < sewingPlan.getInputReceivedQty()) {
+
+            sewingPlan.setStatus(
+                    SewingPlanStatus.IN_SEWING);
+
+        }
+        else {
 
             sewingPlan.setStatus(
                     SewingPlanStatus.COMPLETED);
-
 
         }
 

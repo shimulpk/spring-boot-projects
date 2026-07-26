@@ -18,4 +18,6 @@ public interface SewingPlanService {
     List<SewingPlanResponseDto> getAll();
 
     void delete(Long id);
+
+    List<SewingPlanResponseDto> getAvailableForDayWiseProduction();
 }

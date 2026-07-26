@@ -29,4 +29,6 @@ public interface FinishingPlanRepository extends JpaRepository<FinishingPlan, Lo
     List<FinishingPlan> findTop5ByOrderByStartDateDesc();
 
     Optional<FinishingPlan> findBySewingPlan_Id(Long sewingPlanId);
+
+    boolean existsBySewingPlanId(Long sewingPlanId);
 }

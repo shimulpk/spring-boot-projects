@@ -2,6 +2,7 @@ package com.emranhss.GarmentsManagementSystem.service;
 
 import com.emranhss.GarmentsManagementSystem.dto.request.FinishingPlanRequestDto;
 import com.emranhss.GarmentsManagementSystem.dto.response.FinishingPlanResponseDto;
+import com.emranhss.GarmentsManagementSystem.dto.response.SewingPlanResponseDto;
 
 import java.util.List;
 
@@ -24,4 +25,6 @@ public interface FinishingPlanService {
 
 
     void delete(Long id);
+
+    List<SewingPlanResponseDto> getAvailableSewingPlans();
 }

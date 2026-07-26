@@ -59,5 +59,14 @@ public class SewingPlanController {
                 "Sewing Plan Deleted Successfully");
     }
 
+
+    @GetMapping("/available-for-day-wise-production")
+    public ResponseEntity<List<SewingPlanResponseDto>> getAvailableForDayWiseProduction() {
+
+        return ResponseEntity.ok(
+                sewingPlanService.getAvailableForDayWiseProduction()
+        );
+    }
+
 }
 

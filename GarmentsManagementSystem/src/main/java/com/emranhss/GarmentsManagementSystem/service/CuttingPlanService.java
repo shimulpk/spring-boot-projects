@@ -22,4 +22,6 @@ public interface CuttingPlanService {
     List<CuttingPlanResponseDto> getPendingPlans();
 
     List<CuttingPlanResponseDto> getCompletedPlans();
+
+    List<CuttingPlanResponseDto> getAvailableForSewingPlan();
 }

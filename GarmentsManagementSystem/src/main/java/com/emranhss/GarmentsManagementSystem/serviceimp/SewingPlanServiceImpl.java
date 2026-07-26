@@ -217,6 +217,15 @@ public class SewingPlanServiceImpl implements SewingPlanService {
         sewingPlanRepository.deleteById(id);
     }
 
+    @Override
+    public List<SewingPlanResponseDto> getAvailableForDayWiseProduction() {
+        return sewingPlanRepository.findAll()
+                .stream()
+                .filter(plan ->
+                        plan.getStatus() != SewingPlanStatus.COMPLETED)
+                .map(SewingPlanMapper::toDto)
+                .toList();
+    }
 
 
     private void buildLineProgress(SewingPlanResponseDto dto,

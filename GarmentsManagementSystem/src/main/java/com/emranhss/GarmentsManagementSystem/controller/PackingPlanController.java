@@ -1,6 +1,7 @@
 package com.emranhss.GarmentsManagementSystem.controller;
 
 import com.emranhss.GarmentsManagementSystem.dto.request.PackingPlanRequestDto;
+import com.emranhss.GarmentsManagementSystem.dto.response.FinishingPlanResponseDto;
 import com.emranhss.GarmentsManagementSystem.dto.response.PackingPlanResponseDto;
 import com.emranhss.GarmentsManagementSystem.service.PackingPlanService;
 import lombok.RequiredArgsConstructor;
@@ -59,5 +60,25 @@ public class PackingPlanController {
 
         return ResponseEntity.ok(
                 "Packing Plan Deleted Successfully");
+    }
+
+
+    @GetMapping("/available-finishing-plans")
+    public ResponseEntity<List<FinishingPlanResponseDto>>
+    getAvailableFinishingPlans() {
+
+        return ResponseEntity.ok(
+                packingPlanService.getAvailableFinishingPlans());
+
+    }
+
+    @GetMapping("/available-for-day-wise-packing")
+    public ResponseEntity<List<PackingPlanResponseDto>>
+    getAvailableForDayWisePacking() {
+
+        return ResponseEntity.ok(
+                packingPlanService.getAvailableForDayWisePacking()
+        );
+
     }
 }

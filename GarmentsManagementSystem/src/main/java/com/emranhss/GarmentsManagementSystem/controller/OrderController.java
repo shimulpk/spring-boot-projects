@@ -69,4 +69,29 @@ public class OrderController {
                 orderService.getByBuyer(buyerId));
 
     }
+
+    @GetMapping("/buyer/{buyerId}/available")
+    public ResponseEntity<List<OrderResponseDto>> getAvailableOrdersByBuyer(
+            @PathVariable Long buyerId) {
+
+        return ResponseEntity.ok(
+                orderService.getAvailableOrdersByBuyer(buyerId));
+
+    }
+
+    @GetMapping("/available-for-raw-material-check")
+    public ResponseEntity<List<OrderResponseDto>> getAvailableForRawMaterialCheck() {
+
+        return ResponseEntity.ok(
+                orderService.getAvailableForRawMaterialCheck());
+
+    }
+
+    @GetMapping("/available-for-fabric-check")
+    public ResponseEntity<List<OrderResponseDto>> getAvailableForFabricCheck() {
+
+        return ResponseEntity.ok(
+                orderService.getAvailableForFabricCheck());
+
+    }
 }

@@ -10,5 +10,7 @@ import java.util.Optional;
 public interface FabricsCheckRepository extends JpaRepository<FabricsCheck, Long> {
     Optional<FabricsCheck> findByOrder_Id(Long orderId);
 
+    boolean existsByOrderId(Long orderId);
+
 
 }

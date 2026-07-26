@@ -17,4 +17,6 @@ public interface PackingPlanRepository extends JpaRepository<PackingPlan, Long> 
     List<PackingPlan> findTop5ByOrderByStartDateDesc();
 
     Optional<PackingPlan> findByFinishingPlan_Id(Long finishingPlanId);
+
+    boolean existsByFinishingPlanId(Long finishingPlanId);
 }

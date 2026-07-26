@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RmcCheckRepository extends JpaRepository<RmcCheck,  Long> {
 
-
+    boolean existsByOrderId(Long orderId);
 }

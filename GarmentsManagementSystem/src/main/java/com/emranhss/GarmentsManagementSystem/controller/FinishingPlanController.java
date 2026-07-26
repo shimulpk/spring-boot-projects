@@ -2,6 +2,7 @@ package com.emranhss.GarmentsManagementSystem.controller;
 
 import com.emranhss.GarmentsManagementSystem.dto.request.FinishingPlanRequestDto;
 import com.emranhss.GarmentsManagementSystem.dto.response.FinishingPlanResponseDto;
+import com.emranhss.GarmentsManagementSystem.dto.response.SewingPlanResponseDto;
 import com.emranhss.GarmentsManagementSystem.service.FinishingPlanService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -58,5 +59,14 @@ public class FinishingPlanController {
 
         return ResponseEntity.ok(
                 "Finishing Plan Deleted Successfully");
+    }
+
+    @GetMapping("/available-sewing-plans")
+    public ResponseEntity<List<SewingPlanResponseDto>> getAvailableSewingPlans() {
+
+        return ResponseEntity.ok(
+                finishingPlanService.getAvailableSewingPlans()
+        );
+
     }
 }
