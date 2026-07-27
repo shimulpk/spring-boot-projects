@@ -83,6 +83,11 @@ public class PackingPlanMapper {
         dto.setStatus(
                 packingPlan.getStatus());
 
+        dto.setDestination(
+                packingPlan.getOrder().getShippingAddress()
+        );
+
+
         return dto;
     }
 }

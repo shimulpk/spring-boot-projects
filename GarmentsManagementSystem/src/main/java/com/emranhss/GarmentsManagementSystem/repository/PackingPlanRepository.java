@@ -19,4 +19,11 @@ public interface PackingPlanRepository extends JpaRepository<PackingPlan, Long> 
     Optional<PackingPlan> findByFinishingPlan_Id(Long finishingPlanId);
 
     boolean existsByFinishingPlanId(Long finishingPlanId);
+
+    List<PackingPlan> findByStatus(PackingPlanStatus status);
+
+    boolean existsById(Long id);
+
+
+
 }

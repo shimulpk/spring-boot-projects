@@ -58,4 +58,6 @@ public class PackingPlanResponseDto {
 
     private Double progressPercentage;
 
+    private String destination;
+
 }

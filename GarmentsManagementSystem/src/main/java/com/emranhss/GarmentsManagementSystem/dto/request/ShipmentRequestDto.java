@@ -11,17 +11,9 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class ShipmentRequestDto {
 
-    // User Select
     private Long packingPlanId;
 
-    // User Input
     private LocalDate shipmentDate;
-
-    private String destination;
-
-    private String transportName;
-
-    private String vehicleNo;
 
     private String remarks;
 }

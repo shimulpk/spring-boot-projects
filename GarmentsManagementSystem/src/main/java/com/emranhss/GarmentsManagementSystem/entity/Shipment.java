@@ -24,7 +24,7 @@ public class Shipment {
     @Column(nullable = false, unique = true)
     private String shipmentNo;
 
-    // Only Completed Packing Plan can create Shipment
+    // One Packing Plan = One Shipment
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "packing_plan_id", nullable = false, unique = true)
     private PackingPlan packingPlan;
@@ -35,11 +35,13 @@ public class Shipment {
 
     private String buyerName;
 
+    private String destination;
+
     private String orderNo;
 
     private String styleNo;
 
-    private String color;
+
 
     // Auto From Packing Plan (totalPackedQty)
     private Integer shipmentQty;
@@ -48,13 +50,8 @@ public class Shipment {
      * User Input
      */
 
+    @Column(nullable = false)
     private LocalDate shipmentDate;
-
-    private String destination;
-
-    private String transportName;
-
-    private String vehicleNo;
 
     @Column(length = 1000)
     private String remarks;
