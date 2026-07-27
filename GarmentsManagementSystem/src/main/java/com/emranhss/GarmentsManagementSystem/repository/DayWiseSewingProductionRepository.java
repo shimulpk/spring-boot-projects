@@ -62,4 +62,10 @@ order by d.styleNo
 """)
     List<DayWiseSewingProduction> getTodayProductions(LocalDate date);
 
+    @Query("""
+SELECT COALESCE(SUM(d.achievedQuantity),0)
+FROM DayWiseSewingProduction d
+""")
+    Long getTotalProduction();
+
 }

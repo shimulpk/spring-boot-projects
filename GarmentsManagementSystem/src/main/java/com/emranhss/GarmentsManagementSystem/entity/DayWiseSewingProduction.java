@@ -46,7 +46,6 @@ public class DayWiseSewingProduction {
 
 
 //  Actual Sewing
-
     private Integer achievedQuantity;
 
 //     Reject Sewing

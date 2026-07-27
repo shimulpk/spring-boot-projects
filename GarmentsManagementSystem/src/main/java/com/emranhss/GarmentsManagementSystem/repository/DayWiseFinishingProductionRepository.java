@@ -43,4 +43,10 @@ order by d.styleNo
     List<DayWiseFinishingProduction> getTodayProductions(LocalDate date);
 
 
+
+    @Query("""
+SELECT COALESCE(SUM(d.passQty),0)
+FROM DayWiseFinishingProduction d
+""")
+    Long getTotalProduction();
 }

@@ -55,4 +55,10 @@ order by d.packingPlan.packingPlanId
     List<PackingPlan> getPackingPlansWithProduction();
 
 
+
+    @Query("""
+SELECT COALESCE(SUM(d.todayPackedQty),0)
+FROM DayWisePackingProduction d
+""")
+    Long getTotalProduction();
 }

@@ -53,4 +53,10 @@ order by d.styleNo
 
 
 
+    @Query("""
+SELECT COALESCE(SUM(d.actualCutPieces),0)
+FROM DayWiseCuttingProduction d
+""")
+    Long getTotalProduction();
+
 }

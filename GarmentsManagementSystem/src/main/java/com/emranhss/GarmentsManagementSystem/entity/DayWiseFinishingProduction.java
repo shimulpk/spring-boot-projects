@@ -34,8 +34,7 @@ public class DayWiseFinishingProduction {
     private LocalDate date;
 
 
-//   Today's Pass Quantity
-
+//   Today's Pass finishing Quantity
     private Integer passQty;
 
 //    Today's Reject Quantity
