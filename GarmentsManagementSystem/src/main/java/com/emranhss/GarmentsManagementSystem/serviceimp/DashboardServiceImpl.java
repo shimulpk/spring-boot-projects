@@ -26,6 +26,7 @@ public class DashboardServiceImpl implements DashboardService {
     private final VendorRepository vendorRepository;
     private final ItemRepository itemRepository;
     private final OrderRepository orderRepository;
+    private final ShipmentRepository shipmentRepository;
     private final StoreRequisitionRepository storeRequisitionRepository;
     private final PurchaseOrderRepository purchaseOrderRepository;
     private final StockRepository stockRepository;
@@ -60,6 +61,7 @@ public class DashboardServiceImpl implements DashboardService {
         dto.setTotalItems(itemRepository.count());
 
         dto.setTotalOrders(orderRepository.count());
+        dto.setTotalShipments(shipmentRepository.count());
 
         // ===============================
         // Pending

@@ -20,6 +20,7 @@ public class DashboardResponseDto {
     private Long totalItems;
 
     private Long totalOrders;
+    private Long totalShipments;
 
     private Long pendingRequisitions;
 
