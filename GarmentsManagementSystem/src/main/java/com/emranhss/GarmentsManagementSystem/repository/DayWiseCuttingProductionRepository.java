@@ -59,4 +59,6 @@ FROM DayWiseCuttingProduction d
 """)
     Long getTotalProduction();
 
+    boolean existsByCuttingPlanIdAndDate(Long cuttingPlanId, LocalDate date);
+
 }

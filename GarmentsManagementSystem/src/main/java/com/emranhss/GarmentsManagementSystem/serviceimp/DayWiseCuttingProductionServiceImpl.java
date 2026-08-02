@@ -9,6 +9,7 @@ import com.emranhss.GarmentsManagementSystem.entity.DayWiseCuttingProduction;
 
 import com.emranhss.GarmentsManagementSystem.enums.CuttingPlanStatus;
 
+import com.emranhss.GarmentsManagementSystem.exception.DuplicateEntryException;
 import com.emranhss.GarmentsManagementSystem.repository.CuttingPlanRepository;
 import com.emranhss.GarmentsManagementSystem.repository.DayWiseCuttingProductionRepository;
 import com.emranhss.GarmentsManagementSystem.repository.OrderRepository;
@@ -31,6 +32,15 @@ public class DayWiseCuttingProductionServiceImpl implements DayWiseCuttingProduc
 
     @Override
     public DayWiseCuttingProductionResponseDto create(DayWiseCuttingProductionRequestDto request) {
+
+        if (productionRepository.existsByCuttingPlanIdAndDate(
+                request.getCuttingPlanId(),
+                request.getDate())) {
+
+            throw new DuplicateEntryException(
+                    "Today's entry already exists for this cutting plan.");
+        }
+
         CuttingPlan plan =
                 cuttingPlanRepository.findById(
                                 request.getCuttingPlanId())

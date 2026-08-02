@@ -18,6 +18,22 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+
+
+
+    @ExceptionHandler(DuplicateEntryException.class)
+    public ResponseEntity<Map<String, Object>> handleDuplicateEntryException(
+            DuplicateEntryException ex) {
+
+        Map<String, Object> body = new LinkedHashMap<>();
+
+        body.put("timestamp", LocalDateTime.now());
+        body.put("status", HttpStatus.CONFLICT.value());
+        body.put("error", "Conflict");
+        body.put("message", ex.getMessage());
+
+        return new ResponseEntity<>(body, HttpStatus.CONFLICT);
+    }
     /**
      * Handles all RuntimeExceptions.
      *
